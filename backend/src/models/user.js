@@ -74,6 +74,14 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+userSchema.methods.revokeAuthToken = async function (token) {
+  const user = this;
+  // Remove this login token from the user
+  user.tokens = user.tokens.filter(currToken => currToken.token !== token);
+  await user.save();
+  return true;
+};
+
 userSchema.methods.toJSON = function() {
   const user = this;
   const userObject = user.toObject();

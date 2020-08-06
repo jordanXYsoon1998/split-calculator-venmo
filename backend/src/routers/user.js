@@ -30,8 +30,54 @@ router.post('/users/login', async (req, res) => {
   }
 });
 
+// User Logout
+router.post('/users/logout', auth, async (req, res) => {
+  // Revoke the authtoken
+  try {
+    const logoutSuccess = req.user.revokeAuthToken(req.token);
+    if (!logoutSuccess) {
+      throw new Error('Failed to logout');
+    }
+
+    res.sendStatus(200);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+// Fetch User Profile to check if Venmo logged in/access token
 router.get('/users/me', auth, async (req, res) => {
-  res.send(req.user);
+  res.send({ user: req.user });
+});
+
+// Update User Deets like email/password
+router.patch('/users/me', auth, async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['email', 'password'];
+  const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' });
+  }
+
+  try {
+    updates.forEach(update => req.user[update] = req.body[update]);
+
+    await req.user.save();
+    res.status(200).send({ user: req.user });
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+// Delete the user account from DB
+router.delete('/users/me', auth, async (req, res) => {
+  try {
+    await req.user.remove();
+    res.sendStatus(204);
+  } catch (e) {
+    res.status(500).send(e);
+  }
 });
 
 module.exports = router;
