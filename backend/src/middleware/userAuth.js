@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const auth = async (req, res, next) => {
+const userAuth = async (req, res, next) => {
   try {
     // User should have jwt cookie set or redirect to login
     if (!req.cookies.jwt) {
@@ -20,8 +20,11 @@ const auth = async (req, res, next) => {
 
     next();
   } catch (e) {
-    return res.status(401).send({ error: 'Please authenticate' });
+    return res.status(401).send({
+      errorCode: 401,
+      error: 'Please login with SplitBill'
+    });
   }
 };
 
-module.exports = auth;
+module.exports = userAuth;
