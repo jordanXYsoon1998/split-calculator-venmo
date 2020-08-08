@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { consistentErr } = require('../utils/error');
 
 const userAuth = async (req, res, next) => {
   try {
@@ -20,10 +21,11 @@ const userAuth = async (req, res, next) => {
 
     next();
   } catch (e) {
-    return res.status(401).send({
-      errorCode: 401,
-      error: 'Please login with SplitBill'
-    });
+    return res.status(401).send(consistentErr({
+      message: 'Please login with SplitBill',
+      code: 401,
+      name: 'Error'
+    }));
   }
 };
 

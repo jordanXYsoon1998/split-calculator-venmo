@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const auth = require('../middleware/userAuth');
+const { consistentErr } = require('../utils/error');
 
 const router = new express.Router();
 
@@ -25,8 +26,11 @@ router.post('/login', async (req, res) => {
     const token = await user.generateAuthToken();
     res.cookie('jwt', token, { httpOnly: true });
     res.send({ user });
-  } catch (e) {
-    res.status(400).send(e);
+  } catch ({ name, message }) {
+    res.status(400).send(consistentErr({
+      message,
+      name
+    }));
   }
 });
 
@@ -57,7 +61,10 @@ router.patch('/me', auth, async (req, res) => {
   const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' });
+    return res.status(400).send(consistentErr({
+      message: 'Invalid updates!',
+      name: 'Error'
+    }));
   }
 
   try {
