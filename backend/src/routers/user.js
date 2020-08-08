@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 
 // Create new user
-router.post('/users', async (req, res) => {
+router.post('/', async (req, res) => {
   const user = User(req.body);
 
   try {
@@ -19,7 +19,7 @@ router.post('/users', async (req, res) => {
 });
 
 // User Login
-router.post('/users/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     const token = await user.generateAuthToken();
@@ -31,7 +31,7 @@ router.post('/users/login', async (req, res) => {
 });
 
 // User Logout
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/logout', auth, async (req, res) => {
   // Revoke the authtoken
   try {
     const logoutSuccess = req.user.revokeAuthToken(req.token);
@@ -46,12 +46,12 @@ router.post('/users/logout', auth, async (req, res) => {
 });
 
 // Fetch User Profile to check if Venmo logged in/access token
-router.get('/users/me', auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
   res.send({ user: req.user });
 });
 
 // Update User Deets like email/password
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('/me', auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['email', 'password'];
   const isValidOperation = updates.every(update => allowedUpdates.includes(update));
@@ -71,7 +71,7 @@ router.patch('/users/me', auth, async (req, res) => {
 });
 
 // Delete the user account from DB
-router.delete('/users/me', auth, async (req, res) => {
+router.delete('/me', auth, async (req, res) => {
   try {
     await req.user.remove();
     res.sendStatus(204);

@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(userRouter);
+app.use('/users', userRouter);
 app.get('/', (req, res) => {
   res.send('Welcome to server for SplitBill Venmo API!');
 });
