@@ -13,3 +13,7 @@ const randomDeviceId = () => {
   });
   return randomId.join('');
 };
+
+module.exports = {
+  randomDeviceId
+};

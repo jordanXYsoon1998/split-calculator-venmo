@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+const VenmoUser = require('./venmoUser');
 const { validPassword } = require('../utils/userModel');
 
 const SALT_WORK_FACTOR = 10;
@@ -30,6 +31,10 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
+  venmoLoggedIn: {
+    type: Boolean,
+    default: false
+  },
   tokens: [{
     token: {
       type: String,
@@ -38,6 +43,12 @@ const userSchema = new mongoose.Schema({
   }]
 }, {
   timestamps: true
+});
+
+userSchema.virtual('venmoUser', {
+  ref: 'VenmoUser',
+  localField: '_id',
+  foreignField: 'owner'
 });
 
 userSchema.methods.generateAuthToken = async function () {
@@ -103,6 +114,13 @@ userSchema.pre('save', async function(next) {
     return next(e);
   }
 
+  next();
+});
+
+// Make sure to delete the associated VenmoUser login details if this User is deleted
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await VenmoUser.deleteMany({ owner: user._id });
   next();
 });
 
