@@ -116,12 +116,39 @@ venmoUserSchema.methods.requestOtp = async function () {
       }
     });
 
-    if (response.status != 200 || !response.data.data
+    if (response.status !== 200 || !response.data.data
           || !response.data.data.status || response.data.data.status !== 'sent') {
       throw new Error('Failed to request OTP through text');
     }
 
     return true;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Takes OTP from user and sends it to Venmo server
+ * @param {String} Otp from user client
+ * @returns {Object} User object from Venmo server
+ */
+venmoUserSchema.methods.getUserDetails = async function (otp) {
+  const venmoUser = this;
+  const otpSubmitPath = '/oauth/access_token?client_id=1';
+  const venmoClient = initVenmoClient(venmoUser.deviceId);
+  try {
+    const response = await venmoClient.post(otpSubmitPath, {}, {
+      headers: {
+        'venmo-otp-secret': venmoUser.otpSecret,
+        'Venmo-Otp': otp
+      }
+    });
+
+    if (response.status !== 200 || !response.data) {
+      throw new Error('Login with OTP failed');
+    }
+
+    return response.data;
   } catch (err) {
     throw err;
   }

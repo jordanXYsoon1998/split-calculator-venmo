@@ -40,7 +40,21 @@ router.post('/login', async (req, res) => {
 });
 
 // Second step in login with sms OTP
-router.post('/login/otp', venmoUserFetch, (req, res) => {
+router.post('/login/otp', venmoUserFetch, async (req, res) => {
+  try {
+    const actualVenmoObject = await req.venmoUser.getUserDetails(req.body.otp);
+    req.venmoUser.accessToken = actualVenmoObject.access_token;
+    req.user.venmoLoggedIn = true;
+    await Promise.all([req.venmoUser.save(), req.user.save()]);
+    res.send(200).send({
+      message: 'Successfully logged in to Venmo!'
+    });
+  } catch (e) {
+    res.status(400).send(consistentErr({
+      message: e.message,
+      name: e.name
+    }));
+  }
 });
 
 module.exports = router;
