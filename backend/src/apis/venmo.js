@@ -12,4 +12,6 @@ const initVenmoClient = (deviceId) => axios.create({
   }
 });
 
+// TODO: Create new client for authenticated requests with accessToken
+
 module.exports = initVenmoClient;

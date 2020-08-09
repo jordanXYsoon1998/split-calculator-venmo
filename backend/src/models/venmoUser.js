@@ -154,6 +154,24 @@ venmoUserSchema.methods.getUserDetails = async function (otp) {
   }
 };
 
+// Make sure to revoke the Venmo access token if present
+venmoUserSchema.pre('remove', async function (next) {
+  const venmoUser = this;
+  if (!venmoUser.accessToken) {
+    // No need to revoke the token
+    next();
+  } else {
+    const revokeAccessTokenPath = '/oauth/access_token';
+    const venmoClient = initVenmoClient(venmoUser.deviceId);
+    await venmoClient.delete(revokeAccessTokenPath, {
+      headers: {
+        'Authorization': `Bearer ${venmoUser.accessToken}`
+      }
+    });
+    next();
+  }
+});
+
 const VenmoUser = mongoose.model('VenmoUser', venmoUserSchema);
 
 module.exports = VenmoUser;
