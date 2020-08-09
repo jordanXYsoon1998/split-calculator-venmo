@@ -60,7 +60,7 @@ router.post('/login/otp', venmoUserFetch, async (req, res) => {
 // Logout/Revoke Venmo access token
 router.post('/logout', venmoUserFetch, async (req, res) => {
   await req.venmoUser.remove();
-  res.sendStatus(204);
+  res.sendStatus(200);
 });
 
 module.exports = router;
