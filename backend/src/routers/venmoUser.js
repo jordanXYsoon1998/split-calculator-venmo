@@ -46,7 +46,7 @@ router.post('/login/otp', venmoUserFetch, async (req, res) => {
     req.venmoUser.accessToken = actualVenmoObject.access_token;
     req.user.venmoLoggedIn = true;
     await Promise.all([req.venmoUser.save(), req.user.save()]);
-    res.send(200).send({
+    res.status(200).send({
       message: 'Successfully logged in to Venmo!'
     });
   } catch (e) {

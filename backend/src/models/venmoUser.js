@@ -49,6 +49,11 @@ venmoUserSchema.methods.sendCredentials = async function (email, password) {
       phone_email_or_username: email,
       client_id: "1",
       password
+    }, {
+      validateStatus(status) {
+        // Typical behavior for this request includes 401 or 400
+        return status < 500;
+      }
     });
 
     // Store otp secret
@@ -79,25 +84,21 @@ venmoUserSchema.methods.getPhoneAuth = async function () {
       }
     });
 
-    if (response.status != 200) {
-      throw new Error('Failed to fetch SMS authentication method');
-    }
-
     const body = response.data;
 
     if (!body || !body.data || !body.data.devices
           || !body.data.devices[0]) {
-      throw new Error('Failed to fetch SMS authentication method');
+      throw new Error();
     }
     const { value, device_type } = body.data.devices[0];
 
     if (device_type != 'sms') {
-      throw new Error('Failed to fetch SMS authentication method');
+      throw new Error();
     }
 
     return value;
   } catch (err) {
-    throw err;
+    throw new Error('Failed to fetch SMS authentication method');
   }
 };
 
@@ -116,14 +117,14 @@ venmoUserSchema.methods.requestOtp = async function () {
       }
     });
 
-    if (response.status !== 200 || !response.data.data
-          || !response.data.data.status || response.data.data.status !== 'sent') {
-      throw new Error('Failed to request OTP through text');
+    if (!response.data.data || !response.data.data.status
+          || response.data.data.status !== 'sent') {
+      throw new Error();
     }
 
     return true;
   } catch (err) {
-    throw err;
+    throw new Error('Failed to request OTP through text');
   }
 };
 
@@ -144,13 +145,13 @@ venmoUserSchema.methods.getUserDetails = async function (otp) {
       }
     });
 
-    if (response.status !== 200 || !response.data) {
-      throw new Error('Login with OTP failed');
+    if (!response.data) {
+      throw new Error();
     }
 
     return response.data;
   } catch (err) {
-    throw err;
+    throw new Error('Login with OTP failed');
   }
 };
 
