@@ -1,7 +1,7 @@
 const express = require('express');
 const VenmoUser = require('../models/venmoUser');
 const { consistentErr } = require('../utils/error');
-const { venmoUserFetch, venmoUserCheckClean } = require('../middleware/venmoUser');
+const { venmoUserFetch, venmoUserCheckClean, venmoUserAuth } = require('../middleware/venmoUser');
 
 const router = new express.Router();
 
@@ -59,7 +59,7 @@ router.post('/login/otp', venmoUserFetch, async (req, res) => {
 });
 
 // Logout/Revoke Venmo access token
-router.post('/logout', venmoUserFetch, async (req, res) => {
+router.post('/logout', venmoUserAuth, async (req, res) => {
   req.user.venmoLoggedIn = false;
   await Promise.all([req.venmoUser.remove(), req.user.save()]);
   res.sendStatus(200);

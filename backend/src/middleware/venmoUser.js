@@ -51,7 +51,31 @@ const venmoUserFetch = async (req, res, next) => {
   }
 };
 
+/**
+ * Middleware to check if the User has a VenmoUser and is fully authenticated
+ */
+const venmoUserAuth = async (req, res, next) => {
+  try {
+    const venmoUser = await VenmoUser.findOne({ owner: req.user._id });
+
+    if (!venmoUser || !venmoUser.accessToken) {
+      throw new Error();
+    }
+
+    req.venmoUser = venmoUser;
+
+    next();
+  } catch (e) {
+    return res.status(401).send(consistentErr({
+      message: 'Invalid or revoked OAuth token',
+      code: 401,
+      name: 'Error'
+    }));
+  }
+};
+
 module.exports = {
   venmoUserFetch,
-  venmoUserCheckClean
+  venmoUserCheckClean,
+  venmoUserAuth
 };
