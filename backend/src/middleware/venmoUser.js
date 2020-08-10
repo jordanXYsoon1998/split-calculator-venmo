@@ -67,7 +67,7 @@ const venmoUserAuth = async (req, res, next) => {
     next();
   } catch (e) {
     return res.status(401).send(consistentErr({
-      message: 'Invalid or revoked OAuth token',
+      message: 'Invalid or revoked Venmo OAuth token',
       code: 401,
       name: 'Error'
     }));
