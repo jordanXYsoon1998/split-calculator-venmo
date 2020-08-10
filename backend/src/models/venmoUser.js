@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { randomDeviceId } = require('../utils/venmoUserModel');
-const initVenmoClient = require('../apis/venmo.js');
+const { initVenmoClient } = require('../apis/venmo.js');
 
 const venmoUserSchema = new mongoose.Schema({
   userId: {

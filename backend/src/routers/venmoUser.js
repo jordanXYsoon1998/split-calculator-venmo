@@ -2,11 +2,12 @@ const express = require('express');
 const VenmoUser = require('../models/venmoUser');
 const { consistentErr } = require('../utils/error');
 const { venmoUserFetch, venmoUserCheckClean, venmoUserAuth } = require('../middleware/venmoUser');
+const venmoUserOperationRouter = require('./venmoUserOperation');
 
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Welcome to Venmo functionality! You can access this because you have logged in as a SplitBill user!');
+  res.send('Welcome to Venmo login functionality! You can access this because you have logged in as a SplitBill user!');
 });
 
 // First step in login with username and password
@@ -64,5 +65,7 @@ router.post('/logout', venmoUserAuth, async (req, res) => {
   await Promise.all([req.venmoUser.remove(), req.user.save()]);
   res.sendStatus(200);
 });
+
+router.use('/me', venmoUserAuth, venmoUserOperationRouter);
 
 module.exports = router;
