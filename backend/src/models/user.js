@@ -48,7 +48,8 @@ const userSchema = new mongoose.Schema({
 userSchema.virtual('venmoUser', {
   ref: 'VenmoUser',
   localField: '_id',
-  foreignField: 'owner'
+  foreignField: 'owner',
+  justOne: true
 });
 
 userSchema.methods.generateAuthToken = async function () {

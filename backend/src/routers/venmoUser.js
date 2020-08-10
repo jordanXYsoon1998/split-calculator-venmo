@@ -1,7 +1,7 @@
 const express = require('express');
 const VenmoUser = require('../models/venmoUser');
 const { consistentErr } = require('../utils/error');
-const venmoUserFetch = require('../middleware/venmoUserFetch');
+const { venmoUserFetch, venmoUserCheckClean } = require('../middleware/venmoUser');
 
 const router = new express.Router();
 
@@ -10,8 +10,8 @@ router.get('/', (req, res) => {
 });
 
 // First step in login with username and password
-// TODO: Implement checking to ensure only one valid/in-progress login at any time
-router.post('/login', async (req, res) => {
+// venmoUserCheckClean handles the case where incomplete/complete login present
+router.post('/login', venmoUserCheckClean, async (req, res) => {
   try {
     // Associate this attempted Venmo login with this User
     const venmoUser = VenmoUser({ owner: req.user._id });
@@ -44,6 +44,7 @@ router.post('/login/otp', venmoUserFetch, async (req, res) => {
   try {
     const actualVenmoObject = await req.venmoUser.getUserDetails(req.body.otp);
     req.venmoUser.accessToken = actualVenmoObject.access_token;
+    req.venmoUser.userId = actualVenmoObject.user.id;
     req.user.venmoLoggedIn = true;
     await Promise.all([req.venmoUser.save(), req.user.save()]);
     res.status(200).send({
@@ -59,7 +60,8 @@ router.post('/login/otp', venmoUserFetch, async (req, res) => {
 
 // Logout/Revoke Venmo access token
 router.post('/logout', venmoUserFetch, async (req, res) => {
-  await req.venmoUser.remove();
+  req.user.venmoLoggedIn = false;
+  await Promise.all([req.venmoUser.remove(), req.user.save()]);
   res.sendStatus(200);
 });
 
