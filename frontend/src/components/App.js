@@ -5,9 +5,12 @@ import {
   Switch
 } from 'react-router-dom';
 
+import history from '../history';
 import Landing from './pages/Landing';
 import MainApp from './pages/MainApp';
-import history from '../history';
+import UserLogin from './pages/UserLogin';
+import UserSignUp from './pages/UserSignUp';
+import VenmoLogin from './pages/VenmoLogin';
 
 const App = () => {
   return (
@@ -16,6 +19,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Landing} />
           <Route path="/main-app" component={MainApp} />
+          <Route path="/login" component={UserLogin} />
+          <Route path="/sign-up" component={UserSignUp} />
+          <Route path="/venmo-login" component={VenmoLogin} />
         </Switch>
       </Router>
     </div>
