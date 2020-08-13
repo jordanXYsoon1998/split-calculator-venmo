@@ -36,8 +36,8 @@ const _responseHelper = (dispatch, response, successCb) => {
   if (response.status === 200) {
     // Successfully fetched the list of friends
     // That means we're authenticated for both user and venmo
-    dispatch(userLogin);
-    dispatch(venmoLogin);
+    dispatch(userLogin());
+    dispatch(venmoLogin());
 
     // Call the successful callback
     successCb(dispatch, response);
@@ -45,12 +45,12 @@ const _responseHelper = (dispatch, response, successCb) => {
     // Unauthorized
     // If response payload code is 401, user authorization needed
     // If response payload code is 402, Venmo authorization needed
-    if (response.data.code === 401) {
-      dispatch(userLogout);
-    } else if (response.data.code === 402) {
+    if (response.data.error.code === 401) {
+      dispatch(userLogout());
+    } else if (response.data.error.code === 402) {
       // User authenticated but not Venmo authenticated
-      dispatch(userLogin);
-      dispatch(venmoLogout);
+      dispatch(userLogin());
+      dispatch(venmoLogout());
     }
   }
 
@@ -59,7 +59,7 @@ const _responseHelper = (dispatch, response, successCb) => {
 export const fetchFriends = () => async dispatch => {
   const friendsPath = 'venmoUsers/me/friends';
   const response = await splitbill.get(friendsPath, {
-    validateStatus(status) {
+    validateStatus: function(status) {
       // If not authenticated, we'll get 401 code
       return status < 500;
     }

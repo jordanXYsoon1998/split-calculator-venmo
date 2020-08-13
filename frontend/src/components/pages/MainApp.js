@@ -10,7 +10,7 @@ class MainApp extends React.Component {
   }
 
   renderLogin() {
-    if (this.props.userAuth === null || this.props.venmoAuth === null) {
+    if (this.props.userAuth === null && this.props.venmoAuth === null) {
       return (
         <h3>Fetching from server. Please wait...</h3>
       );

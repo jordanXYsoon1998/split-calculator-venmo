@@ -11,7 +11,7 @@ services:
       - mongodb
     ports:
       - "3000:3000"
-      - "3001:3001"
+      - "4200:4200"
     volumes:
       - ./:/home/node/shared
     networks:
