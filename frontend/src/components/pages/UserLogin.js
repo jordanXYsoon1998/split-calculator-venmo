@@ -1,10 +1,19 @@
 import React from 'react';
+import UserCredentials from '../pieces/UserCredentials';
 
 const UserLogin = () => {
+  const onFormSubmit = ({ email, password }) => {
+    console.log({
+      email,
+      password
+    });
+  };
+
   return (
-    <div>
-      <h2>Welcome to the Login Page!</h2>
-    </div>
+    <UserCredentials
+      pageTitle="Welcome to the Login Page!"
+      onFormSubmit={onFormSubmit}
+    />
   );
 };
 

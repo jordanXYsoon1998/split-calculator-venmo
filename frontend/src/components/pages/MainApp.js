@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { fetchFriends, fetchPaymentMethods } from '../../actions';
 
@@ -9,7 +9,8 @@ class MainApp extends React.Component {
     this.props.fetchFriends();
   }
 
-  renderLogin() {
+  renderRedirect() {
+    // TODO: Figure out logic because I'm sure it'll prematurely redirect
     if (this.props.userAuth === null && this.props.venmoAuth === null) {
       return (
         <h3>Fetching from server. Please wait...</h3>
@@ -20,11 +21,15 @@ class MainApp extends React.Component {
       );
     } else if (!this.props.userAuth) {
       return (
-        <h3>We need to redirect you to the user login page!</h3>
+        <Redirect to="/login" />
+      );
+    } else if (this.props.venmoAuth === null) {
+      return (
+        <h3>Fetching from server. Please wait...</h3>
       );
     } else if (!this.props.venmoAuth) {
       return (
-        <h3>We need to redirect you to the Venmo login page!</h3>
+        <Redirect to="/venmo-login" />
       );
     }
   }
@@ -32,7 +37,7 @@ class MainApp extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.renderLogin()}
+        {this.renderRedirect()}
         <h2>Welcome to the Actual App page!</h2>
         <Link to="/" className="ui button">Return to Landing Page</Link>
       </React.Fragment>
