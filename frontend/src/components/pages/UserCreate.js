@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import UserCredentials from '../pieces/UserCredentials';
 
-const UserSignUp = () => {
+const UserCreate = () => {
   const onFormSubmit = ({ email, password }) => {
     console.log({
       email,
@@ -10,10 +11,15 @@ const UserSignUp = () => {
   };
   return (
     <UserCredentials
-      pageTitle="Welcome to the Signup Page!"
+      pageTitle="Create Account"
       onFormSubmit={onFormSubmit}
-    />
+    >
+      <p>
+        Already have an account?&nbsp;
+        <Link to="/login">Login here</Link>
+      </p>
+    </UserCredentials>
   );
 };
 
-export default UserSignUp;
+export default UserCreate;
