@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true });
     res.send({ user });
   } catch ({ name, message }) {
-    res.status(400).send(consistentErr({
+    res.status(401).send(consistentErr({
       message,
       name
     }));

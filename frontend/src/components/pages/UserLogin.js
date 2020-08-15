@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import splitbill from '../../apis/splitbill';
+import history from '../../history';
 import UserCredentials from '../pieces/UserCredentials';
 
 const UserLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
+
   const onFormSubmit = async ({ email, password }) => {
+    setLoading(true);
     try {
-      const loginResponse = await splitbill.post('/users/login', { email, password });
+      await splitbill.post('/users/login', { email, password });
+      history.push('/main-app');
     } catch (err) {
-      console.log(err.response.data);
+      setLoading(false);
+      if (err.response.status === 401) {
+        setErrors([...errors, { message: 'Incorrect email or password' }]);
+      }
     }
   };
 
@@ -16,6 +25,8 @@ const UserLogin = () => {
     <UserCredentials
       pageTitle="Login"
       onFormSubmit={onFormSubmit}
+      loadingState={loading}
+      errors={errors}
     >
       <p>
         New to us?&nbsp;

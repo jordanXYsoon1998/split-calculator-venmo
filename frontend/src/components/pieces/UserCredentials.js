@@ -2,13 +2,32 @@ import React, { useState } from 'react';
 import Field from './Field';
 import './UserCredentials.css';
 
-const UserCredentials = ({ pageTitle, onFormSubmit, children } = {}) => {
+const UserCredentials = ({ pageTitle, onFormSubmit, loadingState, errors, children } = {}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     onFormSubmit({ email, password });
+  };
+
+  const renderErrors = () => {
+    const result = errors.map((error) => {
+      return (
+        <li>{error.message}</li>
+      );
+    });
+    if (result.length >= 1) {
+      return (
+        <React.Fragment>
+          <div className="header">Error Occurred!</div>
+          <ul className="list">
+            {result}
+          </ul>
+        </React.Fragment>
+      );
+    }
+    return null;
   };
 
   return (
@@ -20,7 +39,10 @@ const UserCredentials = ({ pageTitle, onFormSubmit, children } = {}) => {
               {pageTitle}
             </div>
           </h2>
-          <form className="ui large form" onSubmit={handleSubmit}>
+          <form
+            className={`ui large ${loadingState ? 'loading ' : ''}form error`}
+            onSubmit={handleSubmit}
+          >
             <div className="ui stacked segment">
               <Field
                 label="Email"
@@ -42,6 +64,9 @@ const UserCredentials = ({ pageTitle, onFormSubmit, children } = {}) => {
                 <i className="lock icon"></i>
               </Field>
               <button className="ui fluid primary button" type="submit">Submit</button>
+            </div>
+            <div className="ui error message">
+              {renderErrors()}
             </div>
           </form>
           <div className="ui message">
