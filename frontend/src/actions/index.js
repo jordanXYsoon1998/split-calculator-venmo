@@ -8,7 +8,7 @@ import {
   VENMO_NOT_LOGGED_IN
 } from './types';
 
-const userLogin = () => {
+export const userLogin = () => {
   return {
     type: USER_LOGGED_IN
   };
@@ -53,7 +53,6 @@ const _responseHelper = (dispatch, response, successCb) => {
       dispatch(venmoLogout());
     }
   }
-
 };
 
 export const fetchFriends = () => async dispatch => {

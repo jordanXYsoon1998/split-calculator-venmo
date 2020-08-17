@@ -118,6 +118,15 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+// Middleware to handle MongoDB error of duplicate key
+userSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error('Email must be unique'));
+  } else {
+    next();
+  }
+});
+
 // Make sure to delete the associated VenmoUser login details if this User is deleted
 userSchema.pre('remove', async function (next) {
   const user = this;

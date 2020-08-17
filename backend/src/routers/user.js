@@ -14,8 +14,11 @@ router.post('/', async (req, res) => {
     const token = await user.generateAuthToken();
     res.cookie('jwt', token, { httpOnly: true });
     res.status(201).send({ user });
-  } catch (e) {
-    res.status(400).send(e);
+  } catch ({ name, message }) {
+    res.status(400).send(consistentErr({
+      message,
+      name
+    }));
   }
 });
 
