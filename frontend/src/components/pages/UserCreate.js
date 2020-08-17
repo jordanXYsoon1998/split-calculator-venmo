@@ -12,6 +12,7 @@ const UserCreate = () => {
   const dispatch = useDispatch();
 
   const onFormSubmit = async ({ email, password }) => {
+    setErrors([]);
     setLoading(true);
     try {
       await splitbill.post('/users', { email, password });

@@ -122,6 +122,10 @@ userSchema.pre('save', async function(next) {
 userSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error('Email must be unique'));
+  } else if (error._message === 'User validation failed') {
+    // TODO: Decide if you want to handle multiple validation error
+    //        to look nicer
+    next();
   } else {
     next();
   }
