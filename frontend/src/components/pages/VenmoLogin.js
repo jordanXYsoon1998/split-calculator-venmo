@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import history from '../../history';
 import splitbill from '../../apis/splitbill';
-import { venmoLogin } from '../../actions';
+import { userLogin, venmoLogin } from '../../actions';
 import FormHeader from '../pieces/FormHeader';
 import FormWrapper from '../pieces/FormWrapper';
 import GridContainer from '../pieces/GridContainer';
@@ -28,6 +28,7 @@ const VenmoLogin = () => {
     setLoading(true);
     try {
       const loginResponse = await splitbill.post('/venmoUsers/login', { email, password });
+      setLoading(false);
       const { otpReqSuccess, sentTo } = loginResponse.data;
       // Successful so we want to prompt the user for the received OTP
       setShowOtp(otpReqSuccess);
@@ -44,7 +45,8 @@ const VenmoLogin = () => {
     setErrors([]);
     setLoading(true);
     try {
-      const otpResponse = await splitbill.post('/venmoUsers/otp', { otp });
+      const otpResponse = await splitbill.post('/venmoUsers/login/otp', { otp });
+      dispatch(userLogin());
       dispatch(venmoLogin());
       history.push('/main-app');
     } catch (err) {
