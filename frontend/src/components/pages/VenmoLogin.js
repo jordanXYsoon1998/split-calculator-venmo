@@ -17,9 +17,9 @@ const VenmoLogin = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   // For the Venmo Otp Component
-  const [showOtp, setShowOtp] = useState(true);
+  const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState('');
-  const [otpSentTo, setOtpSentTo] = useState('XXX-XXX-3667');
+  const [otpSentTo, setOtpSentTo] = useState('');
 
   const dispatch = useDispatch();
 
