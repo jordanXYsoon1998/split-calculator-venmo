@@ -4,14 +4,22 @@ import { Link } from 'react-router-dom';
 import history from '../../history';
 import splitbill from '../../apis/splitbill';
 import { userLogin } from '../../actions';
+import FormHeader from '../pieces/FormHeader';
+import FormWrapper from '../pieces/FormWrapper';
+import GridContainer from '../pieces/GridContainer';
 import UserCredentials from '../pieces/UserCredentials';
 
 const UserLogin = () => {
+  // For the UserCredentials component
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // For the FormWrapper
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+
   const dispatch = useDispatch();
 
-  const onFormSubmit = async ({ email, password }) => {
+  const onFormSubmit = async () => {
     setErrors([]);
     setLoading(true);
     try {
@@ -26,18 +34,33 @@ const UserLogin = () => {
     }
   };
 
+  const signupRedirect = () => {
+    return (
+      <div className="ui message">
+        <p>
+          New to us?&nbsp;
+          <Link to="/user-create">Sign Up</Link>
+        </p>
+      </div>
+    );
+  };
+
   return (
-    <UserCredentials
-      pageTitle="Login"
-      onFormSubmit={onFormSubmit}
-      loadingState={loading}
-      errors={errors}
-    >
-      <p>
-        New to us?&nbsp;
-        <Link to="/user-create">Sign Up</Link>
-      </p>
-    </UserCredentials>
+    <GridContainer>
+      <React.Fragment>
+        <FormHeader title="Login" />
+        <FormWrapper
+          onSubmit={onFormSubmit}
+          loading={loading}
+          errors={errors}
+        >
+          <UserCredentials
+            {...{email, setEmail, password, setPassword}}
+          />
+        </FormWrapper>
+        {signupRedirect()}
+      </React.Fragment>
+    </GridContainer>
   );
 };
 

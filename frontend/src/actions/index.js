@@ -20,7 +20,7 @@ const userLogout = () => {
   };
 };
 
-const venmoLogin = () => {
+export const venmoLogin = () => {
   return {
     type: VENMO_LOGGED_IN
   };
