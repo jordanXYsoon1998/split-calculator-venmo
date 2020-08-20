@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import history from '../../history';
 import splitbill from '../../apis/splitbill';
-import { } from '../../actions';
+import { venmoLogin } from '../../actions';
 import FormHeader from '../pieces/FormHeader';
 import FormWrapper from '../pieces/FormWrapper';
 import GridContainer from '../pieces/GridContainer';
 import UserCredentials from '../pieces/UserCredentials';
+import VenmoOtpSubmit from '../pieces/VenmoOtpSubmit';
 
 const VenmoLogin = () => {
   // For the UserCredentials component
@@ -16,12 +17,13 @@ const VenmoLogin = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   // For the Venmo Otp Component
-  const [showOtp, setShowOtp] = useState(false);
-  const [otpSentTo, setOtpSentTo] = useState('');
+  const [showOtp, setShowOtp] = useState(true);
+  const [otp, setOtp] = useState('');
+  const [otpSentTo, setOtpSentTo] = useState('XXX-XXX-3667');
 
   const dispatch = useDispatch();
 
-  const onFormSubmit = async () => {
+  const onCredentialFormSubmit = async () => {
     setErrors([]);
     setLoading(true);
     try {
@@ -33,7 +35,22 @@ const VenmoLogin = () => {
     } catch (err) {
       setLoading(false);
       if (err.response.status === 400) {
-        setErrors([...errors, { message: 'Incorrect email or password' }]);
+        setErrors([...errors, { message: err.response.data.error.message }]);
+      }
+    }
+  };
+
+  const onOtpFormSubmit = async () => {
+    setErrors([]);
+    setLoading(true);
+    try {
+      const otpResponse = await splitbill.post('/venmoUsers/otp', { otp });
+      dispatch(venmoLogin());
+      history.push('/main-app');
+    } catch (err) {
+      setLoading(false);
+      if (err.response.status === 400) {
+        setErrors([...errors, { message: err.response.data.error.message }]);
       }
     }
   };
@@ -50,11 +67,17 @@ const VenmoLogin = () => {
         <FormWrapper
           loading={loading}
           errors={errors}
-          onSubmit={onFormSubmit}
+          onSubmit={showOtp ? onOtpFormSubmit : onCredentialFormSubmit}
         >
-          <UserCredentials
-            {...{email, setEmail, password, setPassword}}
-          />
+          {showOtp ? (
+            <VenmoOtpSubmit
+              {...{otp, setOtp, otpSentTo}}
+            />
+          ) : (
+            <UserCredentials
+              {...{email, setEmail, password, setPassword}}
+            />
+          )}
         </FormWrapper>
       </React.Fragment>
     </GridContainer>
