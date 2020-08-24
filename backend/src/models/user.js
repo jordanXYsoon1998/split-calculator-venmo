@@ -134,7 +134,9 @@ userSchema.post('save', function(error, doc, next) {
 // Make sure to delete the associated VenmoUser login details if this User is deleted
 userSchema.pre('remove', async function (next) {
   const user = this;
-  await VenmoUser.deleteMany({ owner: user._id });
+  await user.populate('venmoUser').execPopulate();
+  // Remove the venmoUser so that its document middleware triggers
+  user.venmoUser.remove();
   next();
 });
 
