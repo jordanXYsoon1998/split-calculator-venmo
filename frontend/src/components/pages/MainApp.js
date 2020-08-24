@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 import { fetchFriends, fetchPaymentMethods } from '../../actions';
+import DeleteAccountModal from '../pieces/DeleteAccountModal';
 
 class MainApp extends React.Component {
+  state = { deleteModalActive: false };
+
   componentDidMount() {
     this.props.fetchFriends();
+    this.props.fetchPaymentMethods();
   }
 
   renderRedirect() {
@@ -34,19 +38,62 @@ class MainApp extends React.Component {
     }
   }
 
+  renderFriendsButton() {
+    if (this.props.venmoFriends.length !== 0) {
+      return (
+        <button onClick={() => { console.log(this.props.venmoFriends) }}>Print Friends</button>
+      );
+    }
+    return null;
+  }
+
+  renderPaymentMethodsButton() {
+    if (this.props.venmoPaymentMethods.length !== 0) {
+      return (
+        <button onClick={() => { console.log(this.props.venmoPaymentMethods) }}>Print Payment Methods</button>
+      );
+    }
+    return null;
+  }
+
+  renderDeleteAccountButton() {
+    return (
+      <button
+        onClick={() => this.setState({ deleteModalActive: true })}
+        className="ui button negative"
+      >
+        Delete Account
+      </button>
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
         {this.renderRedirect()}
         <h2>Welcome to the Actual App page!</h2>
         <Link to="/" className="ui button">Return to Landing Page</Link>
+        {this.renderFriendsButton()}
+        {this.renderPaymentMethodsButton()}
+        {this.renderDeleteAccountButton()}
+        {this.state.deleteModalActive ? 
+          <DeleteAccountModal
+            onDismiss={() => this.setState({ deleteModalActive: false })}
+            active={this.state.deleteModalActive}
+          /> : null
+        }
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return { userAuth: state.userAuth, venmoAuth: state.venmoAuth };
+  return {
+    userAuth: state.userAuth,
+    venmoAuth: state.venmoAuth,
+    venmoFriends: state.venmoFriends,
+    venmoPaymentMethods: state.venmoPaymentMethods
+  };
 };
 
 export default connect(

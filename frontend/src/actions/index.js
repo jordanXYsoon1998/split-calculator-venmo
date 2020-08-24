@@ -5,7 +5,8 @@ import {
   USER_LOGGED_IN,
   USER_NOT_LOGGED_IN,
   VENMO_LOGGED_IN,
-  VENMO_NOT_LOGGED_IN
+  VENMO_NOT_LOGGED_IN,
+  VENMO_UNKNOWN_LOGGED_IN
 } from './types';
 
 export const userLogin = () => {
@@ -30,6 +31,19 @@ const venmoLogout = () => {
   return {
     type: VENMO_NOT_LOGGED_IN
   };
+};
+
+const venmoUnknown = () => {
+  return {
+    type: VENMO_UNKNOWN_LOGGED_IN
+  };
+};
+
+export const deleteUserAccount = () => async dispatch => {
+  await splitbill.delete('/users/me');
+  // If successful, we know the person is logged out
+  dispatch(userLogout());
+  dispatch(venmoUnknown());
 };
 
 const _responseHelper = (dispatch, response, successCb) => {
