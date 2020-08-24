@@ -136,7 +136,9 @@ userSchema.pre('remove', async function (next) {
   const user = this;
   await user.populate('venmoUser').execPopulate();
   // Remove the venmoUser so that its document middleware triggers
-  user.venmoUser.remove();
+  if (user.venmoUser) {
+    user.venmoUser.remove();
+  }
   next();
 });
 
