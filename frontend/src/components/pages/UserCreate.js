@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 import splitbill from '../../apis/splitbill';
-import { userLogin } from '../../actions';
+import { userLoginState } from '../../actions';
 import FormHeader from '../pieces/FormHeader';
 import FormWrapper from '../pieces/FormWrapper';
 import GridContainer from '../pieces/GridContainer';
@@ -24,7 +24,7 @@ const UserCreate = () => {
     setLoading(true);
     try {
       await splitbill.post('/users', { email, password });
-      dispatch(userLogin());
+      dispatch(userLoginState());
       history.push('/main-app');
     } catch (err) {
       setLoading(false);

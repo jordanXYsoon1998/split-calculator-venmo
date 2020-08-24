@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import history from '../../history';
 import splitbill from '../../apis/splitbill';
-import { userLogin, venmoLogin } from '../../actions';
+import { userLoginState, venmoLoginState } from '../../actions';
 import FormHeader from '../pieces/FormHeader';
 import FormWrapper from '../pieces/FormWrapper';
 import GridContainer from '../pieces/GridContainer';
@@ -46,8 +46,8 @@ const VenmoLogin = () => {
     setLoading(true);
     try {
       const otpResponse = await splitbill.post('/venmoUsers/login/otp', { otp });
-      dispatch(userLogin());
-      dispatch(venmoLogin());
+      dispatch(userLoginState());
+      dispatch(venmoLoginState());
       history.push('/main-app');
     } catch (err) {
       setLoading(false);

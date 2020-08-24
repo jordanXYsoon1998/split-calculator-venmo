@@ -9,31 +9,31 @@ import {
   VENMO_UNKNOWN_LOGGED_IN
 } from './types';
 
-export const userLogin = () => {
+export const userLoginState = () => {
   return {
     type: USER_LOGGED_IN
   };
 };
 
-const userLogout = () => {
+const userLogoutState = () => {
   return {
     type: USER_NOT_LOGGED_IN
   };
 };
 
-export const venmoLogin = () => {
+export const venmoLoginState = () => {
   return {
     type: VENMO_LOGGED_IN
   };
 };
 
-const venmoLogout = () => {
+const venmoLogoutState = () => {
   return {
     type: VENMO_NOT_LOGGED_IN
   };
 };
 
-const venmoUnknown = () => {
+const venmoUnknownState = () => {
   return {
     type: VENMO_UNKNOWN_LOGGED_IN
   };
@@ -42,16 +42,29 @@ const venmoUnknown = () => {
 export const deleteUserAccount = () => async dispatch => {
   await splitbill.delete('/users/me');
   // If successful, we know the person is logged out
-  dispatch(userLogout());
-  dispatch(venmoUnknown());
+  dispatch(userLogoutState());
+  dispatch(venmoUnknownState());
+};
+
+export const userLogout = () => async dispatch => {
+  await splitbill.post('/users/logout');
+  // If successful, we know the person is logged out
+  dispatch(userLogoutState());
+  dispatch(venmoUnknownState());
+};
+
+export const venmoLogout = () => async dispatch => {
+  await splitbill.post('/venmoUsers/logout');
+  // If successful, we know the person is logged out from Venmo
+  dispatch(venmoLogoutState());
 };
 
 const _responseHelper = (dispatch, response, successCb) => {
   if (response.status === 200) {
     // Successfully fetched the list of friends
     // That means we're authenticated for both user and venmo
-    dispatch(userLogin());
-    dispatch(venmoLogin());
+    dispatch(userLoginState());
+    dispatch(venmoLoginState());
 
     // Call the successful callback
     successCb(dispatch, response);
@@ -60,11 +73,11 @@ const _responseHelper = (dispatch, response, successCb) => {
     // If response payload code is 401, user authorization needed
     // If response payload code is 402, Venmo authorization needed
     if (response.data.error.code === 401) {
-      dispatch(userLogout());
+      dispatch(userLogoutState());
     } else if (response.data.error.code === 402) {
       // User authenticated but not Venmo authenticated
-      dispatch(userLogin());
-      dispatch(venmoLogout());
+      dispatch(userLoginState());
+      dispatch(venmoLogoutState());
     }
   }
 };
