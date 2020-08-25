@@ -34,17 +34,14 @@ class DeleteAccountModal extends React.Component {
   }
 
   render() {
-    if (this.props.active) {
-      return (
-        <Modal
-          onDismiss={() => this.props.onDismiss()}
-          title="Delete Account"
-          content={this.renderContent()}
-          actions={this.renderActions()}
-        />
-      );
-    }
-    return null;
+    return (
+      <Modal
+        onDismiss={() => this.props.onDismiss()}
+        title="Delete Account"
+        content={this.renderContent()}
+        actions={this.renderActions()}
+      />
+    );
   }
 }
 

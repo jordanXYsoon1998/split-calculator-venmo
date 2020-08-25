@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteUserAccount, userLogout, venmoLogout } from '../../actions';
+import { userLogout, venmoLogout } from '../../actions';
+import DeleteAccountModal from './DeleteAccountModal';
 
 const MenuProfileDropdown = ({ positionClass, label }) => {
   const [open, setOpen] = useState(false);
+  const [deleteModalActive, setDeleteModalActive] = useState(false);
   const ref = useRef();
   const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ const MenuProfileDropdown = ({ positionClass, label }) => {
           Sign out of Venmo
         </div>
         <div
-          onClick={() => dispatch(deleteUserAccount())}
+          onClick={() => setDeleteModalActive(true)}
           className="item"
         >
           Delete SplitBill Account
@@ -51,17 +53,24 @@ const MenuProfileDropdown = ({ positionClass, label }) => {
   };
 
   return (
-    <div
-      ref={ref}
-      onClick={() => setOpen(!open)}
-      className={`ui ${positionClass} dropdown item${open ? ' active visible' : ''}`}
-    >
-      <div className="text">{label}</div>
-      <i className="dropdown icon"></i>
-      <div className={`menu${open ? ' visible transition' : ''}`}>
-        {renderedItems()}
+    <React.Fragment>
+      <div
+        ref={ref}
+        onClick={() => setOpen(!open)}
+        className={`ui ${positionClass} dropdown item${open ? ' active visible' : ''}`}
+      >
+        <div className="text">{label}</div>
+        <i className="dropdown icon"></i>
+        <div className={`menu${open ? ' visible transition' : ''}`}>
+          {renderedItems()}
+        </div>
       </div>
-    </div>
+      {deleteModalActive ?
+        <DeleteAccountModal
+          onDismiss={() => setDeleteModalActive(false)}
+        /> : null
+      }
+    </React.Fragment>
   );
 };
 

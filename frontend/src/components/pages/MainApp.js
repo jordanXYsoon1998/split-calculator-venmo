@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 import { fetchFriends, fetchPaymentMethods } from '../../actions';
-import DeleteAccountModal from '../pieces/DeleteAccountModal';
 import MenuHeader from '../pieces/MenuHeader';
 
 class MainApp extends React.Component {
-  state = { deleteModalActive: false };
-
   componentDidMount() {
     this.props.fetchFriends();
     this.props.fetchPaymentMethods();
@@ -57,17 +54,6 @@ class MainApp extends React.Component {
     return null;
   }
 
-  renderDeleteAccountButton() {
-    return (
-      <button
-        onClick={() => this.setState({ deleteModalActive: true })}
-        className="ui button negative"
-      >
-        Delete Account
-      </button>
-    );
-  }
-
   render() {
     return (
       <React.Fragment>
@@ -77,13 +63,6 @@ class MainApp extends React.Component {
         <Link to="/" className="ui button">Return to Landing Page</Link>
         {this.renderFriendsButton()}
         {this.renderPaymentMethodsButton()}
-        {this.renderDeleteAccountButton()}
-        {this.state.deleteModalActive ? 
-          <DeleteAccountModal
-            onDismiss={() => this.setState({ deleteModalActive: false })}
-            active={this.state.deleteModalActive}
-          /> : null
-        }
       </React.Fragment>
     );
   }

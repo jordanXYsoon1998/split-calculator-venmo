@@ -1,7 +1,9 @@
 import splitbill from '../apis/splitbill';
 import {
   FETCH_FRIEND_LIST,
+  DELETE_FRIEND_LIST,
   FETCH_PAYMENT_METHODS,
+  DELETE_PAYMENT_METHODS,
   USER_LOGGED_IN,
   USER_NOT_LOGGED_IN,
   VENMO_LOGGED_IN,
@@ -39,11 +41,25 @@ const venmoUnknownState = () => {
   };
 };
 
+const venmoClearFriends = () => {
+  return {
+    type: DELETE_FRIEND_LIST
+  };
+};
+
+const venmoClearPaymentMethods = () => {
+  return {
+    type: DELETE_PAYMENT_METHODS
+  };
+};
+
 export const deleteUserAccount = () => async dispatch => {
   await splitbill.delete('/users/me');
   // If successful, we know the person is logged out
   dispatch(userLogoutState());
   dispatch(venmoUnknownState());
+  dispatch(venmoClearFriends());
+  dispatch(venmoClearPaymentMethods());
 };
 
 export const userLogout = () => async dispatch => {
@@ -51,12 +67,16 @@ export const userLogout = () => async dispatch => {
   // If successful, we know the person is logged out
   dispatch(userLogoutState());
   dispatch(venmoUnknownState());
+  dispatch(venmoClearFriends());
+  dispatch(venmoClearPaymentMethods());
 };
 
 export const venmoLogout = () => async dispatch => {
   await splitbill.post('/venmoUsers/logout');
   // If successful, we know the person is logged out from Venmo
   dispatch(venmoLogoutState());
+  dispatch(venmoClearFriends());
+  dispatch(venmoClearPaymentMethods());
 };
 
 const _responseHelper = (dispatch, response, successCb) => {
