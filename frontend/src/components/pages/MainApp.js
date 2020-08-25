@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { fetchFriends, fetchPaymentMethods } from '../../actions';
 import DeleteAccountModal from '../pieces/DeleteAccountModal';
+import MenuHeader from '../pieces/MenuHeader';
 
 class MainApp extends React.Component {
   state = { deleteModalActive: false };
@@ -70,6 +71,7 @@ class MainApp extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <MenuHeader />
         {this.renderRedirect()}
         <h2>Welcome to the Actual App page!</h2>
         <Link to="/" className="ui button">Return to Landing Page</Link>
