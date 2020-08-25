@@ -1,7 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const MenuProfileDropdown = ({ positionClass, label }) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const onBodyClick = (event) => {
+      if (ref.current.contains(event.target)) {
+        return;
+      }
+
+      // Close the dropdown if you click anywhere else on the page
+      setOpen(false);
+    };
+
+    document.body.addEventListener('click', onBodyClick);
+
+    // Cleanup and remove the event listener
+    return () => {
+      document.body.removeEventListener('click', onBodyClick);
+    };
+  }, []);
 
   const renderedItems = () => {
     return (
@@ -15,6 +34,7 @@ const MenuProfileDropdown = ({ positionClass, label }) => {
 
   return (
     <div
+      ref={ref}
       onClick={() => setOpen(!open)}
       className={`ui ${positionClass} dropdown item${open ? ' active visible' : ''}`}
     >
