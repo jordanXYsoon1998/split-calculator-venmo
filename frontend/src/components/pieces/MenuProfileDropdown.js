@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteUserAccount, userLogout, venmoLogout } from '../../actions';
 
 const MenuProfileDropdown = ({ positionClass, label }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onBodyClick = (event) => {
@@ -25,9 +28,24 @@ const MenuProfileDropdown = ({ positionClass, label }) => {
   const renderedItems = () => {
     return (
       <React.Fragment>
-        <div className="item">Sign out of Venmo</div>
-        <div className="item">Delete SplitBill Account</div>
-        <div className="item">Sign out</div>
+        <div
+          onClick={() => dispatch(venmoLogout())}
+          className="item"
+        >
+          Sign out of Venmo
+        </div>
+        <div
+          onClick={() => dispatch(deleteUserAccount())}
+          className="item"
+        >
+          Delete SplitBill Account
+        </div>
+        <div
+          onClick={() => dispatch(userLogout())}
+          className="item"
+        >
+          Sign out
+        </div>
       </React.Fragment>
     );
   };
