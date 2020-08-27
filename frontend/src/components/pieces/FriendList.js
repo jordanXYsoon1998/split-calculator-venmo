@@ -11,7 +11,7 @@ class FriendList extends React.Component {
   }
 
   renderFriends() {
-    if (this.props.venmoFriends.length == 0) {
+    if (this.props.venmoFriends.length === 0) {
       return null;
     }
 
