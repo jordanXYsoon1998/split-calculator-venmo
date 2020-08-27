@@ -16,7 +16,7 @@ class FriendList extends React.Component {
     }
 
     return this.props.venmoFriends.map((friend) => {
-      return <FriendItem venmoObj={friend} />;
+      return <FriendItem venmoObj={friend.friendObj} />;
     });
   }
 
@@ -34,9 +34,13 @@ class FriendList extends React.Component {
   }
 }
 
+const getSelectableFriends = (friends) => {
+  return friends.filter(friend => !friend.bill);
+};
+
 const mapStateToProps = (state) => {
   return {
-    venmoFriends: state.venmoFriends
+    venmoFriends: getSelectableFriends(state.venmoFriends)
   };
 };
 

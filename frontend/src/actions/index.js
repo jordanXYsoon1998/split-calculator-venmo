@@ -1,5 +1,7 @@
 import splitbill from '../apis/splitbill';
 import {
+  ADD_FRIEND_BILL,
+  REMOVE_FRIEND_BILL,
   FETCH_FRIEND_LIST,
   DELETE_FRIEND_LIST,
   FETCH_PAYMENT_METHODS,
@@ -134,4 +136,18 @@ export const fetchPaymentMethods = () => async dispatch => {
       payload: response.data.data
     });
   });
+};
+
+export const addFriendToBill = (friend) => {
+  return {
+    type: ADD_FRIEND_BILL,
+    payload: friend
+  };
+};
+
+export const removeFriendFromBill = (friend) => {
+  return {
+    type: REMOVE_FRIEND_BILL,
+    payload: friend
+  };
 };
