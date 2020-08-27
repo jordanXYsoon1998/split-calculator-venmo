@@ -20,15 +20,11 @@ export default (state = [], action) => {
     case DELETE_FRIEND_LIST:
       return [];
     case ADD_FRIEND_BILL:
-      return [
-        ...state.filter(friend => friend.friendObj !== action.payload),
-        { bill: true, friendObj: action.payload }
-      ];
+      return state.map(friend => friend.friendObj === action.payload ?
+        { bill: true, friendObj: friend.friendObj } : friend);
     case REMOVE_FRIEND_BILL:
-      return [
-        ...state.filter(friend => friend.friendObj !== action.payload),
-        { bill: false, friendObj: action.payload }
-      ];
+      return state.map(friend => friend.friendObj === action.payload ?
+        { bill: false, friendObj: friend.friendObj } : friend);
     default:
       return state;
   }

@@ -1,27 +1,56 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addFriendToBill } from '../../actions';
+import { addFriendToBill, removeFriendFromBill } from '../../actions';
 
-const FriendItem = ({ venmoObj }) => {
+const FriendItem = ({ billSelected, venmoObj }) => {
   const { profile_picture_url, display_name, username } = venmoObj;
   const dispatch = useDispatch();
 
   const onItemClick = () => {
-    dispatch(addFriendToBill(venmoObj));
+    if (billSelected) {
+      dispatch(removeFriendFromBill(venmoObj));
+    } else {
+      dispatch(addFriendToBill(venmoObj));
+    }
+  };
+
+  const renderName = () => {
+    if (!billSelected) {
+      return display_name;
+    }
+
+    return (
+      <div className="header">
+        {display_name}
+      </div>
+    );
+  };
+
+  const renderSelected = () => {
+    if (!billSelected) {
+      return null;
+    }
+
+    return (
+      <div className="ui right floated label">
+        <i className="green check icon"></i>
+      </div>
+    );
   };
 
   return (
     <div onClick={onItemClick} className="item">
-      <div className="content">
+      <div className="middle aligned content">
         <div className="ui left floated mini circular image">
           <img
             src={profile_picture_url}
             alt={`Profile Pic (${display_name})`}
           />
         </div>
-        <div className="header">{display_name}</div>
+        {renderName()}
         <div className="meta">
           <span className="username">{`@${username}`}</span>
+          {renderSelected()}
         </div>
       </div>
     </div>
