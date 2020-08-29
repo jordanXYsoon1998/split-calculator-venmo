@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addFriendToBill, removeFriendFromBill } from '../../actions';
 
-const FriendItem = ({ billSelected, venmoObj }) => {
-  const { profile_picture_url, display_name, username } = venmoObj;
+const FriendItem = ({ placeholder, billSelected, venmoObj }) => {
+  const { profile_picture_url, display_name, username } = venmoObj || {};
   const dispatch = useDispatch();
 
   const onItemClick = () => {
@@ -37,6 +37,19 @@ const FriendItem = ({ billSelected, venmoObj }) => {
       </div>
     );
   };
+
+  if (placeholder) {
+    return (
+      <div className="item">
+        <div className="ui placeholder">
+          <div className="image header">
+            <div className="line" />
+            <div className="line" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div onClick={onItemClick} className="item">

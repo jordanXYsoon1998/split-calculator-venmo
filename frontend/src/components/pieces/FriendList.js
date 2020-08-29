@@ -5,6 +5,8 @@ import { fetchFriends } from '../../actions';
 import FriendItem from './FriendItem';
 import './FriendList.css';
 
+const __PLACEHOLDER_NUM = 20;
+
 class FriendList extends React.Component {
   state = { searchTerm: '' };
 
@@ -13,8 +15,10 @@ class FriendList extends React.Component {
   }
 
   renderSearch() {
+    const loading = this.props.venmoFriends.length === 0;
+    const inputClassName = `ui ${loading ? 'disabled ' : ''}icon input`;
     return (
-      <div className="ui icon input">
+      <div className={inputClassName}>
         <input
           type="text"
           placeholder="Search friends..."
@@ -28,7 +32,9 @@ class FriendList extends React.Component {
 
   renderFriends() {
     if (this.props.venmoFriends.length === 0) {
-      return null;
+      return [...Array(__PLACEHOLDER_NUM)].map(() => {
+        return <FriendItem placeholder />;
+      });
     }
 
     const lowerSearchTerm = this.state.searchTerm.toLowerCase();
