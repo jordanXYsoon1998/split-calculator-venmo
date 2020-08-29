@@ -7,7 +7,7 @@ const venmoUserOperationRouter = require('./venmoUserOperation');
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Welcome to Venmo login functionality! You can access this because you have logged in as a SplitBill user!');
+  res.send('Welcome to Venmo login functionality! You can access this because you have logged in as a VenSplitMo user!');
 });
 
 // First step in login with username and password

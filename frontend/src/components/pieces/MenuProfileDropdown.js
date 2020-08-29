@@ -40,7 +40,7 @@ const MenuProfileDropdown = ({ positionClass, label }) => {
           onClick={() => setDeleteModalActive(true)}
           className="item"
         >
-          Delete SplitBill Account
+          Delete VenSplitMo Account
         </div>
         <div
           onClick={() => dispatch(userLogout())}

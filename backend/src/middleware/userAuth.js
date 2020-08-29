@@ -22,7 +22,7 @@ const userAuth = async (req, res, next) => {
     next();
   } catch (e) {
     return res.status(401).send(consistentErr({
-      message: 'Please login with SplitBill',
+      message: 'Please login with VenSplitMo',
       code: 401,
       name: 'Error'
     }));

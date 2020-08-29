@@ -5,7 +5,7 @@ const MenuHeader = () => {
   return (
     <div className="ui borderless top fixed menu">
       <div className="ui text container">
-        <div className="ui left floated header item">SplitBill</div>
+        <div className="ui left floated header item">VenSplitMo</div>
         <MenuProfileDropdown
           positionClass="right floated"
           label="Profile"

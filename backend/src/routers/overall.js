@@ -10,7 +10,7 @@ router.use('/users', userRouter);
 // platform before they can interact with any Venmo functionality including login
 router.use('/venmoUsers', userAuth, venmoUserRouter);
 router.get('/', (req, res) => {
-  res.send('Welcome to server for SplitBill Venmo API!');
+  res.send('Welcome to server for VenSplitMo Venmo API!');
 });
 
 module.exports = router;

@@ -15,7 +15,7 @@ const router = new express.Router();
  */
 
 router.get('/', (req, res) => {
-  res.send('Welcome to Venmo operations! You can access this because your SplitBill account has an authenticated Venmo login');
+  res.send('Welcome to Venmo operations! You can access this because your VenSplitMo account has an authenticated Venmo login');
 });
 
 // Fetch payment methods
