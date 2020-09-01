@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchFriends } from '../../actions';
-import FriendItem from './FriendItem';
-import './FriendList.css';
+import { fetchFriends } from '../../../actions';
+import FriendItem from './Item';
+import './List.css';
 
 const __PLACEHOLDER_NUM = 20;
 
@@ -46,7 +46,7 @@ class FriendList extends React.Component {
             display_name.toLowerCase().includes(lowerSearchTerm)) {
         return (
           <FriendItem
-            billSelected={friend.bill}
+            billSelected={friend.billParty}
             venmoObj={friend.friendObj}
             key={friend.friendObj.id}
           />

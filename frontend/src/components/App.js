@@ -11,7 +11,7 @@ import MainApp from './pages/MainApp';
 import UserLogin from './pages/UserLogin';
 import UserCreate from './pages/UserCreate';
 import VenmoLogin from './pages/VenmoLogin';
-import FriendList from './pieces/FriendList';
+import FriendList from './pieces/Friend/List';
 
 const App = () => {
   return (

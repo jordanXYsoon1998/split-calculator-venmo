@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addFriendToBill, removeFriendFromBill } from '../../actions';
+import { addFriendToBill, removeFriendFromBill } from '../../../actions';
 
 const FriendItem = ({ placeholder, billSelected, venmoObj }) => {
   const { profile_picture_url, display_name, username } = venmoObj || {};

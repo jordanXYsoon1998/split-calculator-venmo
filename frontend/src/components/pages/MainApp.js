@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { fetchFriends, fetchPaymentMethods } from '../../actions';
 import MenuHeader from '../pieces/MenuHeader';
-import FriendList from '../pieces/FriendList';
+import FriendList from '../pieces/Friend/List';
 import './MainApp.css';
 
 class MainApp extends React.Component {

@@ -13,7 +13,7 @@ export default (state = [], action) => {
     case FETCH_FRIEND_LIST:
       return action.payload.map(friendObj => {
         return {
-          bill: false,
+          billParty: false,
           friendObj
         };
       });
@@ -21,10 +21,10 @@ export default (state = [], action) => {
       return [];
     case ADD_FRIEND_BILL:
       return state.map(friend => friend.friendObj === action.payload ?
-        { bill: true, friendObj: friend.friendObj } : friend);
+        { billParty: true, friendObj: friend.friendObj } : friend);
     case REMOVE_FRIEND_BILL:
       return state.map(friend => friend.friendObj === action.payload ?
-        { bill: false, friendObj: friend.friendObj } : friend);
+        { billParty: false, friendObj: friend.friendObj } : friend);
     default:
       return state;
   }
