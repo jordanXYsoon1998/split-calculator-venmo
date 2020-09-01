@@ -12,6 +12,7 @@ import UserLogin from './pages/UserLogin';
 import UserCreate from './pages/UserCreate';
 import VenmoLogin from './pages/VenmoLogin';
 import FriendList from './pieces/Friend/List';
+import BillSplitMain from './pieces/BillSplit/Main';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/user-create" component={UserCreate} />
         <Route path="/venmo-login" component={VenmoLogin} />
         <Route path="/venmo-friends" component={FriendList} />
+        <Route path="/bill-split-main" component={BillSplitMain} />
       </Switch>
     </Router>
   );
