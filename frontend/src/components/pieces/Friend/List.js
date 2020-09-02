@@ -32,8 +32,13 @@ class FriendList extends React.Component {
 
   renderFriends() {
     if (this.props.venmoFriends.length === 0) {
-      return [...Array(__PLACEHOLDER_NUM)].map(() => {
-        return <FriendItem placeholder />;
+      return [...Array(__PLACEHOLDER_NUM)].map((val, index) => {
+        return (
+          <FriendItem
+            key={index}
+            placeholder
+          />
+        );
       });
     }
 
@@ -46,9 +51,9 @@ class FriendList extends React.Component {
             display_name.toLowerCase().includes(lowerSearchTerm)) {
         return (
           <FriendItem
+            key={friend.friendObj.id}
             billSelected={friend.billParty}
             venmoObj={friend.friendObj}
-            key={friend.friendObj.id}
           />
         );
       }

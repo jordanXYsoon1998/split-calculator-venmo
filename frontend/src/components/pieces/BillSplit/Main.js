@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FriendList from '../Friend/List';
+import BillSplitParty from './Party';
 import './Main.css';
 
 const BillSplitMain = () => {
@@ -11,6 +12,7 @@ const BillSplitMain = () => {
       </div>
       <div className="app-content">
         <h1>Welcome to BillSplitMain</h1>
+        <BillSplitParty />
       </div>
     </div>
   );
