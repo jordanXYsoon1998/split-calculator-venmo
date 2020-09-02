@@ -6,7 +6,7 @@ import './Main.css';
 
 const BillSplitMain = () => {
   return (
-    <div className="main-wrapper">
+    <div className="bill-split-wrapper">
       <div className="sidebar">
         <FriendList />
       </div>
