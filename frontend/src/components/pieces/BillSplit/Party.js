@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import FriendPartyItem from '../Friend/PartyItem';
 
+// TODO: Find out how to add yourself by default
 class BillSplitParty extends React.Component {
   renderPartyItems() {
     return this.props.billParty.map(friend => {

@@ -12,9 +12,11 @@ const BillSplitMain = () => {
         <FriendList />
       </div>
       <div className="app-content">
-        <h1>Welcome to BillSplitMain</h1>
-        <BillSplitParty />
-        <BillSplitMainForm />
+        <div className="ui container">
+          <h1>Welcome to BillSplitMain</h1>
+          <BillSplitParty />
+          <BillSplitMainForm />
+        </div>
       </div>
     </div>
   );
