@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { removeFriendFromBill } from '../../../actions';
 import './PartyItem.css';
 
-const FriendPartyItem = ({ venmoObj }) => {
+/* `onDelete` because if it's overall bill party then we remove
+ * them from the bill.
+ *  However, if it's just item party, then remove from that item
+ */
+const FriendPartyItem = ({ venmoObj, onDelete }) => {
   const { profile_picture_url, display_name, username } = venmoObj || {};
   const [hover, setHover] = useState(false);
-  const dispatch = useDispatch();
 
   const onItemClick = () => {
-    dispatch(removeFriendFromBill(venmoObj));
+    onDelete(venmoObj);
   };
 
   return (
