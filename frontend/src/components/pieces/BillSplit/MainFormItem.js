@@ -1,8 +1,24 @@
 import React from 'react';
+import BillSplitPartyItems from './PartyItems';
 
-const BillSplitMainFormItem = ({ item, index, onChange }) => {
+const BillSplitMainFormItem = ({
+  item,
+  index,
+  onBillChange,
+  onPartyAdd,
+  onPartyDelete
+}) => {
   const titleId = `item-title-${index}`;
   const amountId = `item-amount-${index}`;
+
+  // TODO: Use this for handling drag and drop event
+  const handlePartyAdd = (venmoObj) => {
+    onPartyAdd(venmoObj, index);
+  };
+
+  const handlePartyDelete = (venmoObj) => {
+    onPartyDelete(venmoObj, index);
+  };
 
   return (
     <div className="ui stacked segment">
@@ -16,7 +32,7 @@ const BillSplitMainFormItem = ({ item, index, onChange }) => {
             data-name="title"
             placeholder="Item" 
             value={item.title}
-            onChange={onChange}
+            onChange={onBillChange}
           />
         </div>
         <div className="four wide field">
@@ -28,10 +44,14 @@ const BillSplitMainFormItem = ({ item, index, onChange }) => {
             data-name="amount"
             placeholder="0"
             value={item.amount}
-            onChange={onChange}
+            onChange={onBillChange}
           />
         </div>
       </div>
+      <BillSplitPartyItems
+        friends={item.party}
+        onDelete={handlePartyDelete}
+      />
     </div>
   );
 };
