@@ -1,26 +1,40 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
 import BillSplitPartyItems from './PartyItems';
 import { removeFriendFromBill } from '../../../actions';
 
-const BillSplitOverallParty = () => {
-  const dispatch = useDispatch();
+class BillSplitOverallParty extends React.Component {
+  onRemoveItem(venmoObj) {
+    this.props.removeFriendFromBill(venmoObj);
+  }
 
-  const onRemoveItem = (venmoObj) => {
-    dispatch(removeFriendFromBill(venmoObj));
-  };
-
-  return (
-    <div id="bill-party">
-      <div className="ui large header">
-        Bill Party
+  render() {
+    return (
+      <div id="bill-party">
+        <div className="ui large header">
+          Bill Party
+        </div>
+        <BillSplitPartyItems
+          friends={this.props.billParty}
+          onDelete={(venmoObj) => this.onRemoveItem(venmoObj)}
+        />
       </div>
-      <BillSplitPartyItems
-        onDelete={onRemoveItem}
-      />
-    </div>
-  );
+    );
+  }
 };
 
-export default BillSplitOverallParty;
+const getBillParty = (friends) => {
+  return friends.filter((friend) => friend.billParty);
+};
+
+const mapStateToProps = (state) => {
+  return {
+    billParty: getBillParty(state.venmoFriends)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { removeFriendFromBill }
+)(BillSplitOverallParty);
