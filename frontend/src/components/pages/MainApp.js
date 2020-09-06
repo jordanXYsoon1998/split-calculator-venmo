@@ -15,23 +15,23 @@ class MainApp extends React.Component {
 
   renderRedirect() {
     // TODO: Figure out logic because I'm sure it'll prematurely redirect
-    if (this.props.userAuth === null && this.props.venmoAuth === null) {
+    if (this.props.auth.user === null && this.props.auth.venmo === null) {
       return (
         <h3>Fetching from server. Please wait...</h3>
       );
-    } else if (this.props.userAuth && this.props.venmoAuth) {
+    } else if (this.props.auth.user && this.props.auth.venmo) {
       return (
         <h3>Welcome! You are authenticated in SplitBill and Venmo!</h3>
       );
-    } else if (!this.props.userAuth) {
+    } else if (!this.props.auth.user) {
       return (
         <Redirect to="/login" />
       );
-    } else if (this.props.venmoAuth === null) {
+    } else if (this.props.auth.venmo === null) {
       return (
         <h3>Fetching from server. Please wait...</h3>
       );
-    } else if (!this.props.venmoAuth) {
+    } else if (!this.props.auth.venmo) {
       return (
         <Redirect to="/venmo-login" />
       );
@@ -55,8 +55,7 @@ class MainApp extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userAuth: state.userAuth,
-    venmoAuth: state.venmoAuth,
+    auth: state.auth,
     venmoFriends: state.venmoFriends,
     venmoPaymentMethods: state.venmoPaymentMethods
   };

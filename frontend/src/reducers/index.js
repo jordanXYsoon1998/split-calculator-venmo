@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
-import userAuthReducer from './userAuthReducer';
-import venmoAuthReducer from './venmoAuthReducer';
+import authReducer from './auth';
 import friendListReducer from './friendListReducer';
 import paymentMethodReducer from './paymentMethodReducer';
 
 export default combineReducers({
-  userAuth: userAuthReducer,
-  venmoAuth: venmoAuthReducer,
+  auth: authReducer,
   venmoFriends: friendListReducer,
   venmoPaymentMethods: paymentMethodReducer
 });

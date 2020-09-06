@@ -1,7 +1,7 @@
 import {
   USER_LOGGED_IN,
   USER_NOT_LOGGED_IN
-} from '../actions/types';
+} from '../../actions/types';
 
 export default (state = null, action) => {
   switch (action.type) {
