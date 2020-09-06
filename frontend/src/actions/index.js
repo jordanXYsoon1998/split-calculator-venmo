@@ -6,41 +6,20 @@ import {
   DELETE_FRIEND_LIST,
   FETCH_PAYMENT_METHODS,
   DELETE_PAYMENT_METHODS,
-  USER_LOGGED_IN,
-  USER_NOT_LOGGED_IN,
-  VENMO_LOGGED_IN,
-  VENMO_NOT_LOGGED_IN,
-  VENMO_UNKNOWN_LOGGED_IN
 } from './types';
-
-export const userLoginState = () => {
-  return {
-    type: USER_LOGGED_IN
-  };
-};
-
-const userLogoutState = () => {
-  return {
-    type: USER_NOT_LOGGED_IN
-  };
-};
-
-export const venmoLoginState = () => {
-  return {
-    type: VENMO_LOGGED_IN
-  };
-};
-
-const venmoLogoutState = () => {
-  return {
-    type: VENMO_NOT_LOGGED_IN
-  };
-};
-
-const venmoUnknownState = () => {
-  return {
-    type: VENMO_UNKNOWN_LOGGED_IN
-  };
+import {
+  userLoginState,
+  userLogoutState,
+  venmoLoginState,
+  venmoLogoutState,
+  venmoUnknownState
+} from './auth';
+export {
+  userLoginState,
+  userLogoutState,
+  venmoLoginState,
+  venmoLogoutState,
+  venmoUnknownState
 };
 
 const venmoClearFriends = () => {
@@ -49,6 +28,7 @@ const venmoClearFriends = () => {
   };
 };
 
+// We don't need to worry about this yet
 const venmoClearPaymentMethods = () => {
   return {
     type: DELETE_PAYMENT_METHODS
