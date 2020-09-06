@@ -55,9 +55,7 @@ class MainApp extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
-    venmoFriends: state.venmoFriends,
-    venmoPaymentMethods: state.venmoPaymentMethods
+    auth: state.auth
   };
 };
 

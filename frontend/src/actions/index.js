@@ -118,16 +118,16 @@ export const fetchPaymentMethods = () => async dispatch => {
   });
 };
 
-export const addFriendToBill = (friend) => {
+export const addFriendToBill = (friendId) => {
   return {
     type: ADD_FRIEND_BILL,
-    payload: friend
+    payload: friendId
   };
 };
 
-export const removeFriendFromBill = (friend) => {
+export const removeFriendFromBill = (friendId) => {
   return {
     type: REMOVE_FRIEND_BILL,
-    payload: friend
+    payload: friendId
   };
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchFriends } from '../../../actions';
+import { getVenmoFriends } from '../../../reducers';
 import FriendItem from './Item';
 import './List.css';
 
@@ -78,7 +79,7 @@ class FriendList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    venmoFriends: state.venmoFriends
+    venmoFriends: getVenmoFriends(state)
   };
 };
 

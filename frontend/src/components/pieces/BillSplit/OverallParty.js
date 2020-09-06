@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 
 import BillSplitPartyItems from './PartyItems';
 import { removeFriendFromBill } from '../../../actions';
+import { getBillParty } from '../../../reducers';
 
 class BillSplitOverallParty extends React.Component {
   onRemoveItem(venmoObj) {
-    this.props.removeFriendFromBill(venmoObj);
+    this.props.removeFriendFromBill(venmoObj.id);
   }
 
   render() {
@@ -24,13 +25,9 @@ class BillSplitOverallParty extends React.Component {
   }
 };
 
-const getBillParty = (friends) => {
-  return friends.filter((friend) => friend.billParty);
-};
-
 const mapStateToProps = (state) => {
   return {
-    billParty: getBillParty(state.venmoFriends)
+    billParty: getBillParty(state)
   };
 };
 

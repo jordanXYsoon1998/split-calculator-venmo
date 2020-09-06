@@ -8,9 +8,9 @@ const FriendItem = ({ placeholder, billSelected, venmoObj }) => {
 
   const onItemClick = () => {
     if (billSelected) {
-      dispatch(removeFriendFromBill(venmoObj));
+      dispatch(removeFriendFromBill(venmoObj.id));
     } else {
-      dispatch(addFriendToBill(venmoObj));
+      dispatch(addFriendToBill(venmoObj.id));
     }
   };
 
