@@ -1,7 +1,7 @@
 import {
   FETCH_PAYMENT_METHODS,
   DELETE_PAYMENT_METHODS
-} from '../actions/types';
+} from '../../actions/types';
 
 export default (state = [], action) => {
   switch (action.type) {

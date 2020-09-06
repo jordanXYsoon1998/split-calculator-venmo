@@ -3,7 +3,7 @@ import {
   REMOVE_FRIEND_BILL,
   FETCH_FRIEND_LIST,
   DELETE_FRIEND_LIST
-} from '../actions/types';
+} from '../../actions/types';
 
 /**
  * Redux state to keep the unmodified friend list from Venmo backend
