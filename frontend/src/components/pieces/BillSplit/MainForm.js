@@ -37,10 +37,13 @@ const BillSplitMainForm = () => {
   };
 
   const handlePartyAdd = (friendId, index) => {
-    const updatedBillItems = [...billItems];
-    const partyList = updatedBillItems[index].party;
-    updatedBillItems[index].party = [...partyList, { friendId, amount: 0 }];
-    setBillItems(updatedBillItems);
+    // Don't want to add duplicates to the party
+    if (!billItems[index].party.find(friend => friend.friendId === friendId)) {
+      const updatedBillItems = [...billItems];
+      const partyList = updatedBillItems[index].party;
+      updatedBillItems[index].party = [...partyList, { friendId, amount: 0 }];
+      setBillItems(updatedBillItems);
+    }
   };
 
   const handlePartyDelete = (friendId, index) => {
