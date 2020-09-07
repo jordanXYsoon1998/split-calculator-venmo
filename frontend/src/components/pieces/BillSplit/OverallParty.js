@@ -19,7 +19,7 @@ const BillSplitOverallParty = () => {
         Bill Party
       </div>
       <BillSplitPartyItems
-        friends={billPartyIds}
+        friendIds={billPartyIds}
         onDelete={onRemoveItem}
       />
     </div>

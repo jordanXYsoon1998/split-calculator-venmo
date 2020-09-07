@@ -67,6 +67,7 @@ const BillSplitMainForm = () => {
           item={billItem}
           index={index}
           onBillChange={handleBillItemChange}
+          onPartyAdd={handlePartyAdd}
           onPartyDelete={handlePartyDelete}
         />
       ))}

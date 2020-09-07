@@ -6,14 +6,14 @@ import FriendPartyItem from '../Friend/PartyItem';
 /*
  * Props:
  * - friends :
- *    Array of friends who are part of the bill or part of
+ *    Array of Venmo Friend Ids who are part of the bill or part of
  * - onDelete :
  *    Callback to inherit appropriate behavior on delete from parent
  */
-const BillSplitPartyItems = ({ friends, onDelete }) => {
+const BillSplitPartyItems = ({ friendIds, onDelete }) => {
   return (
     <div className="ui horizontal list">
-      {friends.map(friendId => (
+      {friendIds.map(friendId => (
         <FriendPartyItem
           key={friendId}
           friendId={friendId}

@@ -17,8 +17,16 @@ const FriendPartyItem = ({ friendId, onDelete }) => {
     onDelete(friendId);
   };
 
+  const onDragStart = (event) => {
+    event.dataTransfer.setData('friendId', friendId);
+  };
+
   return (
-    <div className="item">
+    <div
+      className="item"
+      draggable
+      onDragStart={onDragStart}
+    >
       <div
         data-tooltip={display_name}
         onMouseEnter={() => setHover(true)}

@@ -11,7 +11,7 @@ const BillSplitMainFormItem = ({
   const titleId = `item-title-${index}`;
   const amountId = `item-amount-${index}`;
 
-  // TODO: Use this for handling drag and drop event
+  // Use this for handling drag and drop event
   const handlePartyAdd = (friendId) => {
     onPartyAdd(friendId, index);
   };
@@ -20,8 +20,22 @@ const BillSplitMainFormItem = ({
     onPartyDelete(friendId, index);
   };
 
+  const onDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const onDrop = (event) => {
+    // Get friendId being added
+    const droppedFriendId = event.dataTransfer.getData('friendId');
+    handlePartyAdd(droppedFriendId);
+  };
+
   return (
-    <div className="ui stacked segment">
+    <div
+      className="ui stacked segment"
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
       <div className="fields">
         <div className="twelve wide field">
           <label>Item</label>
@@ -49,7 +63,7 @@ const BillSplitMainFormItem = ({
         </div>
       </div>
       <BillSplitPartyItems
-        friends={item.party}
+        friendIds={item.party.map(friend => friend.friendId)}
         onDelete={handlePartyDelete}
       />
     </div>
