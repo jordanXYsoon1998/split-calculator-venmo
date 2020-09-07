@@ -12,12 +12,12 @@ const BillSplitMainFormItem = ({
   const amountId = `item-amount-${index}`;
 
   // TODO: Use this for handling drag and drop event
-  const handlePartyAdd = (venmoObj) => {
-    onPartyAdd(venmoObj, index);
+  const handlePartyAdd = (friendId) => {
+    onPartyAdd(friendId, index);
   };
 
-  const handlePartyDelete = (venmoObj) => {
-    onPartyDelete(venmoObj, index);
+  const handlePartyDelete = (friendId) => {
+    onPartyDelete(friendId, index);
   };
 
   return (

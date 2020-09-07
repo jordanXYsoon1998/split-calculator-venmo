@@ -36,17 +36,17 @@ const BillSplitMainForm = () => {
     setBillItems(updatedBillItems);
   };
 
-  const handlePartyAdd = (venmoObj, index) => {
+  const handlePartyAdd = (friendId, index) => {
     const updatedBillItems = [...billItems];
     const partyList = updatedBillItems[index].party;
-    updatedBillItems[index].party = [...partyList, { friend: venmoObj, amount: 0 }];
+    updatedBillItems[index].party = [...partyList, { friendId, amount: 0 }];
     setBillItems(updatedBillItems);
   };
 
-  const handlePartyDelete = (venmoObj, index) => {
+  const handlePartyDelete = (friendId, index) => {
     const updatedBillItems = [...billItems];
     const partyList = updatedBillItems[index].party;
-    updatedBillItems[index]['party'] = partyList.filter(member => member.friendObj !== venmoObj);
+    updatedBillItems[index]['party'] = partyList.filter(member => member.friendId !== friendId);
     setBillItems(updatedBillItems);
   };
 
