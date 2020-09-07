@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getVenmoFriendById } from '../../../reducers';
 import './PartyItem.css';
 
 /* `onDelete` because if it's overall bill party then we remove
  * them from the bill.
  *  However, if it's just item party, then remove from that item
  */
-const FriendPartyItem = ({ venmoObj, onDelete }) => {
+const FriendPartyItem = ({ friendId, onDelete }) => {
+  const venmoObj = useSelector(state => getVenmoFriendById(state, friendId));
+
   const { profile_picture_url, display_name, username } = venmoObj || {};
   const [hover, setHover] = useState(false);
 
   const onItemClick = () => {
-    onDelete(venmoObj);
+    onDelete(friendId);
   };
 
   return (

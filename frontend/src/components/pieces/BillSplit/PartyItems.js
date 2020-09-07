@@ -13,10 +13,10 @@ import FriendPartyItem from '../Friend/PartyItem';
 const BillSplitPartyItems = ({ friends, onDelete }) => {
   return (
     <div className="ui horizontal list">
-      {friends.map(friend => (
+      {friends.map(friendId => (
         <FriendPartyItem
-          key={friend.friendObj.id}
-          venmoObj={friend.friendObj}
+          key={friendId}
+          friendId={friendId}
           onDelete={onDelete}
         />
       ))}

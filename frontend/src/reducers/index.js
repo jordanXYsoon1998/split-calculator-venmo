@@ -27,6 +27,6 @@ export const getVenmoFriends = (state) => {
   return fromVenmo.getVenmoFriends(state.venmo);
 };
 
-export const getBillParty = (state) => {
-  return fromVenmo.getBillParty(state.venmo);
+export const getBillPartyIds = (state) => {
+  return fromVenmo.getBillPartyIds(state.venmo);
 };

@@ -52,13 +52,13 @@ const compareFriends = (a, b) => {
   }
 };
 
-export const getVenmoFriendById = (state, id) => state[id];
+export const getVenmoFriendById = (state, id) => state[id].friendObj;
 
 // Selector that returns a sorted list of all the Venmo friends
 export const getVenmoFriends = createSelector([friendsSelector], friends => {
   return Object.values(friends).sort(compareFriends);
 });
 
-export const getBillParty = createSelector([getVenmoFriends], friends => {
-  return friends.filter(friend => friend.billParty);
+export const getBillPartyIds = createSelector([getVenmoFriends], friends => {
+  return friends.filter(friend => friend.billParty).map(friend => friend.friendObj.id);
 });

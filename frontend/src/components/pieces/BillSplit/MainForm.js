@@ -7,8 +7,7 @@ const BillSplitMainForm = () => {
 
   /*
    * party structure (Bcos we should match the structure of Redux store):
-   *    billParty: Boolean
-   *    friend: venmoObj
+   *    friendId: Number/String
    *    amount: Number
    */
   const blankBillItem = { title: '', amount: 0, party: [] };
@@ -25,7 +24,8 @@ const BillSplitMainForm = () => {
     const updatedBillItems = [...billItems];
     switch (e.target.dataset.name) {
       case 'title':
-      case 'amount': updatedBillItems[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
+      case 'amount':
+        updatedBillItems[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
         break;
       // TODO: Figure this out once you settle the detailed version of MainFormItem
       case 'party':
