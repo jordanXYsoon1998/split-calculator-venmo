@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BillSplitPartyItems from './PartyItems';
+import BillSplitDetailedBreakdown from './DetailedBreakdown';
 
 const BillSplitMainFormItem = ({
   item,
@@ -65,6 +66,9 @@ const BillSplitMainFormItem = ({
       <BillSplitPartyItems
         friendIds={item.party.map(friend => friend.friendId)}
         onDelete={handlePartyDelete}
+      />
+      <BillSplitDetailedBreakdown
+        {...{ item, index, onBillChange }}
       />
     </div>
   );

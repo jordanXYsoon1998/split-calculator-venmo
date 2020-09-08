@@ -27,8 +27,8 @@ export default () => {
       case 'amount':
         updatedBillItems[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
         break;
-      // TODO: Figure this out once you settle the detailed version of MainFormItem
-      case 'party':
+      case 'party-amount':
+        updatedBillItems[e.target.dataset.idx]['party'][e.target.dataset.partyidx]['amount'] = e.target.value;
         break;
       default:
         break;
