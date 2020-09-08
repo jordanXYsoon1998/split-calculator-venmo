@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addFriendToBill, removeFriendFromBill } from '../../../actions';
+import formatFriendName from './nameUtil';
 
-const FriendItem = ({ placeholder, billSelected, venmoObj }) => {
+const FriendItem = ({ placeholder, myself, billSelected, venmoObj }) => {
   const { profile_picture_url, display_name, username } = venmoObj || {};
   const dispatch = useDispatch();
 
@@ -16,12 +17,12 @@ const FriendItem = ({ placeholder, billSelected, venmoObj }) => {
 
   const renderName = () => {
     if (!billSelected) {
-      return display_name;
+      return formatFriendName(display_name, myself);
     }
 
     return (
       <div className="header">
-        {display_name}
+        {formatFriendName(display_name, myself)}
       </div>
     );
   };

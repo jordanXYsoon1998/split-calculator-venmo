@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
-import { fetchFriends, fetchPaymentMethods } from '../../actions';
+import { fetchFriends, fetchPaymentMethods, fetchVenmoProfile } from '../../actions';
 import MenuHeader from '../pieces/MenuHeader';
 import BillSplitMain from '../pieces/BillSplit/Main';
 import './MainApp.css';
 
 class MainApp extends React.Component {
   componentDidMount() {
+    this.props.fetchVenmoProfile();
     this.props.fetchFriends();
     this.props.fetchPaymentMethods();
   }
@@ -61,5 +62,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { fetchFriends, fetchPaymentMethods }
+  { fetchFriends, fetchPaymentMethods, fetchVenmoProfile }
 )(MainApp);

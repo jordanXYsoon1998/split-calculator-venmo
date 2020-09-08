@@ -53,6 +53,7 @@ class FriendList extends React.Component {
         return (
           <FriendItem
             key={friend.friendObj.id}
+            myself={friend.isMyself}
             billSelected={friend.billParty}
             venmoObj={friend.friendObj}
           />

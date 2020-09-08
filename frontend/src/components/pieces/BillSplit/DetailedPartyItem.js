@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getVenmoFriendById } from '../../../reducers';
+import formatFriendName from '../Friend/nameUtil';
 
 /**
  * This component is used for a single row/item in the detailed
@@ -14,7 +15,7 @@ const BillSplitDetailedPartyItem = ({
   partyAmount,
   onBillChange
 }) => {
-  const friendObj = useSelector(state => getVenmoFriendById(state, friendId));
+  const [friendObj, isMyself] = useSelector(state => getVenmoFriendById(state, friendId));
 
   const partyAmountId = `item-${itemIndex}-party-amount-${partyIndex}`;
 
@@ -24,7 +25,7 @@ const BillSplitDetailedPartyItem = ({
         <label>Person</label>
         <input
           type="text"
-          value={friendObj.display_name}
+          value={formatFriendName(friendObj.display_name, isMyself)}
           readOnly
         />
       </div>

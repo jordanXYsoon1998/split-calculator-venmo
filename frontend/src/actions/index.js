@@ -1,7 +1,10 @@
 import splitbill from '../apis/splitbill';
 import {
+  ADD_MYSELF,
   ADD_FRIEND_BILL,
   REMOVE_FRIEND_BILL,
+  FETCH_VENMO_PROFILE,
+  DELETE_VENMO_PROFILE,
   FETCH_FRIEND_LIST,
   DELETE_FRIEND_LIST,
   FETCH_PAYMENT_METHODS,
@@ -20,6 +23,12 @@ export {
   venmoLoginState,
   venmoLogoutState,
   venmoUnknownState
+};
+
+const venmoClearProfile = () => {
+  return {
+    type: DELETE_VENMO_PROFILE
+  };
 };
 
 const venmoClearFriends = () => {
@@ -82,6 +91,27 @@ const _responseHelper = (dispatch, response, successCb) => {
       dispatch(venmoLogoutState());
     }
   }
+};
+
+export const fetchVenmoProfile = () => async dispatch => {
+  const profilePath = 'venmoUsers/me';
+  const response = await splitbill.get(profilePath, {
+    validateStatus: function(status) {
+      // If not authenticated, we'll get 401 code
+      return status < 500;
+    }
+  });
+
+  _responseHelper(dispatch, response, (dispatch, response) => {
+    dispatch({
+      type: FETCH_VENMO_PROFILE,
+      payload: response.data.data
+    });
+    dispatch({
+      type: ADD_MYSELF,
+      payload: response.data.data
+    });
+  });
 };
 
 export const fetchFriends = () => async dispatch => {

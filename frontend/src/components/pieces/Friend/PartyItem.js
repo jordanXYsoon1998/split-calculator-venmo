@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getVenmoFriendById } from '../../../reducers';
+import formatFriendName from './nameUtil';
 import './PartyItem.css';
 
 /* `onDelete` because if it's overall bill party then we remove
@@ -8,7 +9,7 @@ import './PartyItem.css';
  *  However, if it's just item party, then remove from that item
  */
 const FriendPartyItem = ({ friendId, onDelete }) => {
-  const venmoObj = useSelector(state => getVenmoFriendById(state, friendId));
+  const [venmoObj, isMyself] = useSelector(state => getVenmoFriendById(state, friendId));
 
   const { profile_picture_url, display_name, username } = venmoObj || {};
   const [hover, setHover] = useState(false);
@@ -28,7 +29,7 @@ const FriendPartyItem = ({ friendId, onDelete }) => {
       onDragStart={onDragStart}
     >
       <div
-        data-tooltip={display_name}
+        data-tooltip={formatFriendName(display_name, isMyself)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >

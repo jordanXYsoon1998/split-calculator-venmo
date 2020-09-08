@@ -1,13 +1,14 @@
 import { createSelector } from 'reselect';
 import {
+  ADD_MYSELF,
   ADD_FRIEND_BILL,
   REMOVE_FRIEND_BILL,
   FETCH_FRIEND_LIST,
   DELETE_FRIEND_LIST
 } from '../../actions/types';
 
-const fetchFriendList = (friendList) => {
-  const newState = {};
+const fetchFriendList = (state, friendList) => {
+  const newState = {...state};
   friendList.forEach(friend => {
     newState[friend.id] = {
       billParty: false,
@@ -28,9 +29,18 @@ const friendBillHelper = (state, friendId, billParty) => {
 export default (state = {}, action) => {
   switch (action.type) {
     case FETCH_FRIEND_LIST:
-      return fetchFriendList(action.payload);
+      return fetchFriendList(state, action.payload);
     case DELETE_FRIEND_LIST:
       return {};
+    case ADD_MYSELF:
+      return {
+        ...state,
+        [action.payload.id]: {
+          billParty: true,
+          isMyself: true,
+          friendObj: action.payload
+        }
+      };
     case ADD_FRIEND_BILL:
       return friendBillHelper(state, action.payload, true);
     case REMOVE_FRIEND_BILL:
@@ -52,7 +62,12 @@ const compareFriends = (a, b) => {
   }
 };
 
-export const getVenmoFriendById = (state, id) => state[id].friendObj;
+export const getVenmoFriendById = (state, id) => {
+  return [
+    state[id].friendObj,
+    state[id].isMyself
+  ];
+};
 
 // Selector that returns a sorted list of all the Venmo friends
 export const getVenmoFriends = createSelector([friendsSelector], friends => {

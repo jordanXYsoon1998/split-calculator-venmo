@@ -15,6 +15,10 @@ export const getVenmoAuth = (state) => {
   return fromAuth.getVenmoAuth(state.auth);
 };
 
+export const getVenmoProfile = (state) => {
+  return fromVenmo.getVenmoProfile(state.venmo);
+};
+
 export const getVenmoPaymentMethods = (state) => {
   return fromVenmo.getVenmoPaymentMethods(state.venmo);
 };

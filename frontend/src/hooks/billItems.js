@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // A Custom hook to handle all reads/updates to the bill form state
 export default () => {
@@ -12,6 +12,10 @@ export default () => {
   const [billItems, setBillItems] = useState([
     { ...blankBillItem }
   ]);
+
+  useEffect(() => {
+    console.log(billItems);
+  }, [billItems]);
 
   const addBillItem = () => {
     setBillItems([...billItems, { ...blankBillItem }]);
