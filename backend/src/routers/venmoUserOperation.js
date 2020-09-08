@@ -14,8 +14,18 @@ const router = new express.Router();
  * - Handling a batch list of payments/requests to be made
  */
 
-router.get('/', (req, res) => {
-  res.send('Welcome to Venmo operations! You can access this because your VenSplitMo account has an authenticated Venmo login');
+router.get('/', async (req, res) => {
+  const profilePath = `/users/${req.venmoUser.userId}`;
+  const venmoClient = initAuthVenmoClient(req.venmoUser.accessToken);
+  try {
+    const profileResponse = await venmoClient.get(profilePath);
+    res.status(200).send(profileResponse.data);
+  } catch (err) {
+    res.status(400).send(consistentErr({
+      message: err.message,
+      name: err.name
+    }));
+  }
 });
 
 // Fetch payment methods
