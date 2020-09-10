@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import useBillItems from '../../../hooks/billItems';
 import Field from '../Field';
 import BillSplitMainFormItem from './MainFormItem';
+import BillSplitConfirmationModal from './ConfirmationModal';
 
 const BillSplitMainForm = () => {
   const [titleCaption, setTitleCaption] = useState('');
+  const [confirmActive, setConfirmActive] = useState(false);
   const {
     billItems,
     addBillItem,
+    deleteBillItem,
     handleBillItemChange,
     handlePartyAdd,
-    handlePartyDelete
+    handlePartyDelete,
+    getBillSummary
   } = useBillItems();
 
   return (
@@ -30,15 +34,30 @@ const BillSplitMainForm = () => {
           item={billItem}
           index={index}
           onBillChange={handleBillItemChange}
+          onBillDelete={deleteBillItem}
           onPartyAdd={handlePartyAdd}
           onPartyDelete={handlePartyDelete}
         />
       ))}
-      <button
-        type="button"
-        className="ui button"
-        onClick={() => addBillItem()}
-      >Add New Item</button>
+      <div>
+        <button
+          type="button"
+          className="ui left floated button"
+          onClick={() => addBillItem()}
+        >Add New Item</button>
+        <button
+          type="button"
+          onClick={() => setConfirmActive(true)}
+          className="ui right floated primary button"
+        >Request</button>
+      </div>
+      {confirmActive ? (
+        <BillSplitConfirmationModal
+          titleCaption={titleCaption}
+          billSummary={getBillSummary()}
+          onDismiss={() => setConfirmActive(false)}
+        />
+      ) : null }
     </form>
   );
 };

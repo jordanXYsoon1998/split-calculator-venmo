@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // A Custom hook to handle all reads/updates to the bill form state
 export default () => {
@@ -19,6 +19,12 @@ export default () => {
 
   const addBillItem = () => {
     setBillItems([...billItems, { ...blankBillItem }]);
+  };
+
+  const deleteBillItem = (index) => {
+    const newBillItems = [...billItems];
+    newBillItems.splice(index, 1);
+    setBillItems(newBillItems);
   };
 
   /*
@@ -57,5 +63,24 @@ export default () => {
     setBillItems(updatedBillItems);
   };
 
-  return { billItems, addBillItem, handleBillItemChange, handlePartyAdd, handlePartyDelete };
+  const getBillSummary = () => {
+    const friendTotalAmountPairs = billItems.reduce((accum, currBill) => {
+      const newAccum = {...accum};
+      currBill.party.forEach((friend) => {
+        if (newAccum[friend.friendId] === undefined) {
+          newAccum[friend.friendId] = 0;
+        }
+        newAccum[friend.friendId] += Number(friend.amount);
+      });
+      return newAccum;
+    }, {});
+
+    return friendTotalAmountPairs;
+  };
+
+  return {
+    billItems, addBillItem, deleteBillItem, handleBillItemChange,
+    handlePartyAdd, handlePartyDelete,
+    getBillSummary
+  };
 };

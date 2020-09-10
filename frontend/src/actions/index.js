@@ -1,4 +1,5 @@
 import splitbill from '../apis/splitbill';
+import history from '../history';
 import {
   ADD_MYSELF,
   ADD_FRIEND_BILL,
@@ -146,6 +147,22 @@ export const fetchPaymentMethods = () => async dispatch => {
       payload: response.data.data
     });
   });
+};
+
+export const sendPaymentRequests = (titleCaption, friendAmounts) => async dispatch => {
+  const payRequestPath = 'venmoUsers/me/pay-or-request';
+  const payloads = friendAmounts.map(({ friendId, amount }) => {
+    return {
+      note: titleCaption,
+      amount: amount * -1,
+      user_id: friendId,
+      audience: 'private'
+    };
+  });
+
+  const response = await splitbill.post(payRequestPath, { payloads });
+  // TODO: Code some proper post-request behavior
+  history.push('/main-app');
 };
 
 export const addFriendToBill = (friendId) => {

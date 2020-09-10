@@ -6,11 +6,16 @@ const BillSplitMainFormItem = ({
   item,
   index,
   onBillChange,
+  onBillDelete,
   onPartyAdd,
   onPartyDelete
 }) => {
   const titleId = `item-title-${index}`;
   const amountId = `item-amount-${index}`;
+
+  const handleBillItemDelete = () => {
+    onBillDelete(index);
+  };
 
   // Use this for handling drag and drop event
   const handlePartyAdd = (friendId) => {
@@ -70,6 +75,13 @@ const BillSplitMainFormItem = ({
       <BillSplitDetailedBreakdown
         {...{ item, index, onBillChange }}
       />
+      <button
+        type="button"
+        className="ui right basic circular red button"
+        onClick={handleBillItemDelete}
+      >
+        <i className="icon trash alternate outline"></i>
+      </button>
     </div>
   );
 };

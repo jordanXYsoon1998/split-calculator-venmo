@@ -3,11 +3,21 @@ import { useDispatch } from 'react-redux';
 import { addFriendToBill, removeFriendFromBill } from '../../../actions';
 import formatFriendName from './nameUtil';
 
-const FriendItem = ({ placeholder, myself, billSelected, venmoObj }) => {
+const FriendItem = ({
+  placeholder,
+  myself,
+  billSelected,
+  venmoObj,
+  displayOnly
+}) => {
   const { profile_picture_url, display_name, username } = venmoObj || {};
   const dispatch = useDispatch();
 
   const onItemClick = () => {
+    if (displayOnly) {
+      return;
+    }
+
     if (billSelected) {
       dispatch(removeFriendFromBill(venmoObj.id));
     } else {
