@@ -37,21 +37,42 @@ const BillSplitConfirmationModal = ({
     });
   };
 
+  const renderEachFriendTotal = (friendId, amount) => {
+    return (
+      <div className="item" key={friendId}>
+        <div className="left floated content">
+          <GetVenmoObjWrapper
+            friendId={friendId}
+          />
+        </div>
+        <div className="right floated">
+          {`$${amount}`}
+        </div>
+      </div>
+    );
+  };
+
+  const getTotalSummary = () => {
+    return mapFriendAmount((friendId, amount) => amount).reduce(
+      (accum, curr) => accum + curr, 0);
+  };
+
   const renderContent = () => {
     return (
       <React.Fragment>
         <div className="ui large header">
           {titleCaption}
         </div>
-        <div className="ui items">
-          {mapFriendAmount((friendId, amount) => (
-            <React.Fragment key={friendId}>
-              <GetVenmoObjWrapper
-                friendId={friendId}
-              />
-              <span className="right floated">{amount}</span>
-            </React.Fragment>
-          ))}
+        <div className="ui divided items">
+          {mapFriendAmount(renderEachFriendTotal)}
+          <div className="item">
+            <div className="middle aligned content">
+              <div className="header">Total</div>
+            </div>
+            <div className="right floated">
+              {`$${getTotalSummary()}`}
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -66,7 +87,9 @@ const BillSplitConfirmationModal = ({
       }
     }).filter(thing => thing);
 
-    dispatch(sendPaymentRequests(titleCaption, actualFriends));
+    if (actualFriends.length !== 0) {
+      dispatch(sendPaymentRequests(titleCaption, actualFriends));
+    }
   };
 
   const renderActions = () => {

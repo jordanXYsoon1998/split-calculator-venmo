@@ -2,7 +2,6 @@ import React from 'react';
 
 import FriendPartyItem from '../Friend/PartyItem';
 
-// TODO: Find out how to add yourself by default
 /*
  * Props:
  * - friends :

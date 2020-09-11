@@ -162,7 +162,7 @@ export const sendPaymentRequests = (titleCaption, friendAmounts) => async dispat
 
   const response = await splitbill.post(payRequestPath, { payloads });
   // TODO: Code some proper post-request behavior
-  history.push('/main-app');
+  history.go(0);
 };
 
 export const addFriendToBill = (friendId) => {

@@ -70,6 +70,7 @@ export default () => {
         if (newAccum[friend.friendId] === undefined) {
           newAccum[friend.friendId] = 0;
         }
+        // TODO: Implement some form validation so this line doesn't blow up
         newAccum[friend.friendId] += Number(friend.amount);
       });
       return newAccum;
