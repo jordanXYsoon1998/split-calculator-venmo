@@ -4,10 +4,9 @@
   "description": "A web dev project that uses the unofficial Venmo API to settle the bill with friends.",
   "main": "index.js",
   "scripts": {
-    "build-front-end": "cd frontend && yarn && yarn build && cd ..",
-    "deploy-front-end": "mv frontend/build backend/build",
+    "deploy-front-end": "cd frontend && npm install && npm run build && cd ..",
     "build-back-end": "cd backend && npm install && cd ..",
-    "postinstall": "npm build-front-end && npm deploy-front-end && npm build-back-end",
+    "heroku-postbuild": "npm run deploy-front-end && npm run build-back-end",
     "start": "cd backend && npm start"
   },
   "repository": {

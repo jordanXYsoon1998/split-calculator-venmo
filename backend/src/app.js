@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const buildPath = path.join(__dirname, '..', 'build');
+const buildPath = path.join(__dirname, '..', '..', 'frontend', 'build');
 app.use(express.static(buildPath));
 // Simulate server delay
 // app.use(function(req, res, next) {setTimeout(next, 1000)});
