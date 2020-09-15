@@ -45,7 +45,7 @@ const VenmoLogin = () => {
     setErrors([]);
     setLoading(true);
     try {
-      const otpResponse = await splitbill.post('/venmoUsers/login/otp', { otp });
+      await splitbill.post('/venmoUsers/login/otp', { otp });
       dispatch(userLoginState());
       dispatch(venmoLoginState());
       history.push('/main-app');

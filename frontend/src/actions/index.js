@@ -45,13 +45,18 @@ const venmoClearPaymentMethods = () => {
   };
 };
 
+const venmoClearAll = () => async dispatch => {
+  dispatch(venmoClearFriends());
+  dispatch(venmoClearPaymentMethods());
+  dispatch(venmoClearProfile());
+};
+
 export const deleteUserAccount = () => async dispatch => {
   await splitbill.delete('/users/me');
   // If successful, we know the person is logged out
   dispatch(userLogoutState());
   dispatch(venmoUnknownState());
-  dispatch(venmoClearFriends());
-  dispatch(venmoClearPaymentMethods());
+  dispatch(venmoClearAll());
 };
 
 export const userLogout = () => async dispatch => {
@@ -59,16 +64,14 @@ export const userLogout = () => async dispatch => {
   // If successful, we know the person is logged out
   dispatch(userLogoutState());
   dispatch(venmoUnknownState());
-  dispatch(venmoClearFriends());
-  dispatch(venmoClearPaymentMethods());
+  dispatch(venmoClearAll());
 };
 
 export const venmoLogout = () => async dispatch => {
   await splitbill.post('/venmoUsers/logout');
   // If successful, we know the person is logged out from Venmo
   dispatch(venmoLogoutState());
-  dispatch(venmoClearFriends());
-  dispatch(venmoClearPaymentMethods());
+  dispatch(venmoClearAll());
 };
 
 const _responseHelper = (dispatch, response, successCb) => {
@@ -160,7 +163,7 @@ export const sendPaymentRequests = (titleCaption, friendAmounts) => async dispat
     };
   });
 
-  const response = await splitbill.post(payRequestPath, { payloads });
+  await splitbill.post(payRequestPath, { payloads });
   // TODO: Code some proper post-request behavior
   history.go(0);
 };

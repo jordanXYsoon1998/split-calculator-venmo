@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BillSplitPartyItems from './PartyItems';
 import BillSplitDetailedBreakdown from './DetailedBreakdown';
 

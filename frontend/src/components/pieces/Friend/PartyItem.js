@@ -11,7 +11,7 @@ import './PartyItem.css';
 const FriendPartyItem = ({ friendId, onDelete }) => {
   const [venmoObj, isMyself] = useSelector(state => getVenmoFriendById(state, friendId));
 
-  const { profile_picture_url, display_name, username } = venmoObj || {};
+  const { profile_picture_url, display_name } = venmoObj || {};
   const [hover, setHover] = useState(false);
 
   const onItemClick = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BillSplitPartyItems from './PartyItems';
 import { removeFriendFromBill } from '../../../actions';
