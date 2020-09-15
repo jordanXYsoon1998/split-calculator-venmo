@@ -1,5 +1,5 @@
 {
-  "name": "VenSplitMo App",
+  "name": "vensplitmo-app",
   "version": "1.0.0",
   "description": "A web dev project that uses the unofficial Venmo API to settle the bill with friends.",
   "main": "index.js",
